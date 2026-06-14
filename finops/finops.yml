@@ -1,0 +1,97 @@
+name: Exactly Protocol FinOps
+description: >
+  Financial operations reference for integrating with Exactly Protocol. As a
+  decentralized protocol, there are no subscription fees paid to Exactly. All
+  integration costs arise from blockchain network gas fees, optional RPC provider
+  subscriptions, and potential GRT query fees for The Graph subgraph access.
+costs:
+
+  - name: Ethereum Gas Fees (Write Transactions)
+    description: >
+      All state-changing operations on Exactly Protocol (deposits, borrows,
+      repayments, withdrawals, liquidations, reward claims) require Ethereum
+      mainnet gas. Gas costs fluctuate based on network congestion and the
+      complexity of the operation.
+    type: variable
+    currency: ETH
+    unit: per-transaction
+    estimatedRange: "0.001-0.05 ETH depending on operation and network congestion"
+    notes: >
+      Deposit and borrow operations at maturity are more complex and cost
+      more gas than simple variable-rate operations. Monitor gas prices at
+      https://etherscan.io/gastracker.
+
+  - name: Optimism Gas Fees (Write Transactions)
+    description: >
+      Operations on Optimism (OP Mainnet) incur significantly lower gas fees
+      than Ethereum mainnet, making fixed-rate lending more cost-effective for
+      smaller positions.
+    type: variable
+    currency: ETH
+    unit: per-transaction
+    estimatedRange: "0.00001-0.001 ETH per transaction"
+    notes: >
+      Optimism gas costs are a fraction of Ethereum mainnet. Monitor at
+      https://optimistic.etherscan.io.
+
+  - name: Base Gas Fees (Write Transactions)
+    description: >
+      Operations on Base incur low gas fees comparable to Optimism.
+    type: variable
+    currency: ETH
+    unit: per-transaction
+    estimatedRange: "0.00001-0.001 ETH per transaction"
+    notes: >
+      Monitor Base gas costs at https://basescan.org.
+
+  - name: RPC Provider Subscription (Optional)
+    description: >
+      For production integrations requiring reliable, high-throughput access
+      to Ethereum, Optimism, or Base nodes, developers typically subscribe to
+      a commercial RPC provider such as Alchemy or Infura.
+    type: optional
+    currency: USD
+    unit: per-month
+    estimatedRange: "$0-$500+/month depending on request volume"
+    notes: >
+      Free tiers available from Alchemy (300M compute units/month) and Infura
+      (100K requests/day). Production workloads typically require paid plans.
+
+  - name: The Graph Query Fees (Optional)
+    description: >
+      GraphQL queries to Exactly subgraphs on The Graph decentralized network
+      may require GRT token payment to indexers, depending on the access method
+      used. Hosted service queries are free but may be deprecated.
+    type: optional
+    currency: GRT
+    unit: per-query
+    estimatedRange: "Minimal GRT fees; varies by indexer"
+    notes: >
+      Consult https://thegraph.com/docs/en/querying/querying-the-graph/ for
+      current fee structures.
+
+  - name: Protocol Borrowing Costs (User-facing)
+    description: >
+      End users borrowing through Exactly Protocol pay interest rates determined
+      by the protocol's non-linear interest rate model. Fixed rates are locked at
+      maturity; variable rates adjust continuously.
+    type: variable
+    currency: varies-by-asset
+    unit: per-annum-rate
+    estimatedRange: "Variable; determined by market utilization rates"
+    notes: >
+      Use the Previewer contract's previewBorrowAtMaturity() to estimate
+      exact borrowing costs before executing a transaction.
+
+  - name: Protocol Rewards (User-facing benefit)
+    description: >
+      Depositors and borrowers may earn EXA or esEXA token rewards distributed
+      by the RewardsController contract. Rewards offset borrowing costs and
+      incentivize liquidity provision.
+    type: rebate
+    currency: EXA
+    unit: per-block
+    estimatedRange: "Varies by market and reward configuration"
+    notes: >
+      Use the RewardsController's allClaimable() method to check pending
+      rewards. esEXA can be vested to EXA via the esEXA contract.

@@ -1,0 +1,53 @@
+name: Exactly Protocol Rate Limits
+description: >
+  Exactly Protocol is a decentralized smart contract protocol with no centralized
+  API server or rate limiting imposed by the Exactly team. Rate constraints come
+  from the underlying blockchain network infrastructure (Ethereum RPC, Optimism RPC)
+  and from The Graph's decentralized network for subgraph queries.
+rateLimits:
+
+  - name: Ethereum Mainnet RPC Rate Limits
+    description: >
+      Smart contract read (view) calls on Ethereum mainnet are rate-limited by
+      the RPC provider in use (e.g. Infura, Alchemy, public endpoints). Public
+      RPC nodes typically allow 10-100 requests per second. Write transactions
+      are constrained by network block times (~12 seconds per block).
+    limit: null
+    period: null
+    notes: >
+      Rate limits vary by RPC provider. Developers should use a dedicated RPC
+      provider such as Alchemy or Infura for production usage. Block time is
+      approximately 12 seconds on Ethereum mainnet.
+
+  - name: Optimism Mainnet RPC Rate Limits
+    description: >
+      Smart contract read calls on Optimism mainnet are rate-limited by the RPC
+      provider. Optimism produces blocks approximately every 2 seconds, enabling
+      faster state updates. Public RPC endpoints may throttle high-frequency calls.
+    limit: null
+    period: null
+    notes: >
+      Optimism block time is approximately 2 seconds. Developers should use a
+      dedicated Optimism RPC provider for production deployments.
+
+  - name: Base Mainnet RPC Rate Limits
+    description: >
+      Smart contract read calls on Base (Coinbase L2) are constrained by the RPC
+      provider. Base produces blocks approximately every 2 seconds.
+    limit: null
+    period: null
+    notes: >
+      Base block time is approximately 2 seconds. Production integrations should
+      use a dedicated Base RPC provider.
+
+  - name: The Graph Subgraph Query Limits
+    description: >
+      GraphQL queries to Exactly Protocol subgraphs via The Graph's decentralized
+      network are subject to indexer-specific rate limits and potential query fees
+      in GRT tokens. Free-tier usage through The Graph's legacy hosted service
+      may have request caps.
+    limit: null
+    period: null
+    notes: >
+      Consult The Graph documentation at https://thegraph.com/docs for current
+      rate limits and query fee structures on the decentralized network.

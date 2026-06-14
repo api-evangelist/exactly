@@ -1,0 +1,51 @@
+name: Exactly Protocol Plans
+description: >
+  Exactly Protocol is a fully decentralized, permissionless protocol with no
+  subscription plans or API keys required. Access to all smart contract methods,
+  The Graph subgraph API, and read-only previewer functions is open to anyone
+  with an Ethereum-compatible wallet or direct RPC access. Usage costs are
+  determined by Ethereum and Optimism network gas fees rather than subscription
+  tiers. Developers accessing the GraphQL subgraph via The Graph's decentralized
+  network may incur GRT (Graph Token) query fees depending on the indexer.
+plans:
+  - name: Open Protocol Access
+    description: >
+      Permissionless, open access to all Exactly Protocol smart contracts on
+      Ethereum mainnet, Optimism, and Base. No API key, account registration,
+      or subscription required. Callers pay only network gas fees.
+    url: https://docs.exact.ly
+    status: active
+    pricingModel: pay-per-use
+    pricingUrl: ""
+    rateLimits: []
+    features:
+      - Full access to Market, Auditor, Previewer, and RewardsController contracts
+      - Fixed and variable rate deposits and borrows
+      - Read-only previewer functions at no cost (view calls)
+      - Rewards querying and claiming via RewardsController
+      - No registration or API key required
+    restrictions:
+      - Network gas fees apply for write transactions
+      - View/read-only calls are free on Ethereum and Optimism RPCs
+      - Smart contract interaction requires an Ethereum-compatible wallet
+
+  - name: The Graph Subgraph Access
+    description: >
+      GraphQL access to indexed Exactly Protocol data through The Graph decentralized
+      network for Ethereum mainnet and Optimism. Free querying may be available
+      through The Graph's hosted service; decentralized network queries may require
+      GRT tokens depending on indexer configuration.
+    url: https://thegraph.com/explorer/subgraphs/As6Xz6GCvbW8B9Xb7Rx2LqQeJcL3FcUyD8Tk95L8rG5d
+    status: active
+    pricingModel: pay-per-use
+    pricingUrl: https://thegraph.com/docs/en/querying/querying-the-graph/
+    rateLimits: []
+    features:
+      - GraphQL queries for historical and real-time protocol data
+      - Ethereum mainnet subgraph for legacy market data
+      - Optimism subgraph for OP mainnet market data
+      - Aggregation, filtering, and relationship queries
+      - No Exactly-specific API key required
+    restrictions:
+      - GRT query fees may apply on The Graph decentralized network
+      - Rate limits are governed by The Graph's indexer policies

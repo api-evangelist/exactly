@@ -1,0 +1,508 @@
+# Exactly Protocol GraphQL Schema
+# Source: https://github.com/exactly-finance/subgraph/blob/main/schema.graphql
+# Real schema retrieved from the official exactly-finance/subgraph GitHub repository.
+# This schema is used by the Exactly Protocol subgraph on The Graph and Goldsky.
+
+type Deposit @entity {
+  id: ID!
+  market: Bytes!
+  timestamp: Int!
+  caller: Bytes!
+  owner: Bytes!
+  assets: BigInt!
+  shares: BigInt!
+}
+
+type Withdraw @entity {
+  id: ID!
+  market: Bytes!
+  timestamp: Int!
+  caller: Bytes!
+  receiver: Bytes!
+  owner: Bytes!
+  assets: BigInt!
+  shares: BigInt!
+}
+
+type Borrow @entity {
+  id: ID!
+  market: Bytes!
+  timestamp: Int!
+  caller: Bytes!
+  receiver: Bytes!
+  borrower: Bytes!
+  assets: BigInt!
+  shares: BigInt!
+}
+
+type Repay @entity {
+  id: ID!
+  market: Bytes!
+  timestamp: Int!
+  caller: Bytes!
+  borrower: Bytes!
+  assets: BigInt!
+  shares: BigInt!
+}
+
+type Transfer @entity {
+  id: ID!
+  market: Bytes!
+  timestamp: Int!
+  from: Bytes!
+  to: Bytes!
+  shares: BigInt!
+}
+
+type DepositAtMaturity @entity {
+  id: ID!
+  market: Bytes!
+  timestamp: Int!
+  maturity: Int!
+  caller: Bytes!
+  owner: Bytes!
+  assets: BigInt!
+  fee: BigInt!
+}
+
+type WithdrawAtMaturity @entity {
+  id: ID!
+  market: Bytes!
+  timestamp: Int!
+  maturity: Int!
+  caller: Bytes!
+  receiver: Bytes!
+  owner: Bytes!
+  positionAssets: BigInt!
+  assets: BigInt!
+}
+
+type BorrowAtMaturity @entity {
+  id: ID!
+  market: Bytes!
+  timestamp: Int!
+  maturity: Int!
+  caller: Bytes!
+  receiver: Bytes!
+  borrower: Bytes!
+  assets: BigInt!
+  fee: BigInt!
+}
+
+type RepayAtMaturity @entity {
+  id: ID!
+  market: Bytes!
+  timestamp: Int!
+  maturity: Int!
+  caller: Bytes!
+  borrower: Bytes!
+  assets: BigInt!
+  debtCovered: BigInt!
+}
+
+type Liquidate @entity {
+  id: ID!
+  market: Bytes!
+  timestamp: Int!
+  receiver: Bytes!
+  borrower: Bytes!
+  assets: BigInt!
+  collateralMarket: Bytes!
+  seizedAssets: BigInt!
+}
+
+type Seize @entity {
+  id: ID!
+  market: Bytes!
+  timestamp: Int!
+  liquidator: Bytes!
+  borrower: Bytes!
+  assets: BigInt!
+}
+
+type EarningsAccumulatorSmoothFactorSet @entity {
+  id: ID!
+  market: Bytes!
+  timestamp: Int!
+  earningsAccumulatorSmoothFactor: BigInt!
+}
+
+type TreasurySet @entity {
+  id: ID!
+  market: Bytes!
+  timestamp: Int!
+  treasury: Bytes!
+  treasuryFeeRate: BigInt!
+}
+
+type MarketUpdate @entity {
+  id: ID!
+  market: Bytes!
+  timestamp: Int!
+  floatingDepositShares: BigInt!
+  floatingAssets: BigInt!
+  floatingBorrowShares: BigInt!
+  floatingDebt: BigInt!
+  floatingBackupBorrowed: BigInt!
+  earningsAccumulator: BigInt!
+}
+
+type FixedEarningsUpdate @entity {
+  id: ID!
+  market: Bytes!
+  timestamp: Int!
+  maturity: Int!
+  unassignedEarnings: BigInt!
+}
+
+type AccumulatorAccrual @entity {
+  id: ID!
+  market: Bytes!
+  timestamp: Int!
+}
+
+type FloatingDebtUpdate @entity {
+  id: ID!
+  market: Bytes!
+  timestamp: Int!
+  utilization: BigInt!
+}
+
+type InterestRateModelSet @entity {
+  id: ID!
+  market: Bytes!
+  timestamp: Int!
+  interestRateModel: Bytes!
+  floatingCurveA: BigInt!
+  floatingCurveB: BigInt!
+  floatingMaxUtilization: BigInt!
+  minRate: BigInt!
+  naturalRate: BigInt!
+  naturalUtilization: BigInt!
+  sigmoidSpeed: BigInt!
+  growthSpeed: BigInt!
+  maxRate: BigInt!
+  spreadFactor: BigInt!
+  timePreference: BigInt!
+  fixedAllocation: BigInt!
+  maturitySpeed: BigInt!
+  fixedCurveA: BigInt!
+  fixedCurveB: BigInt!
+  fixedMaxUtilization: BigInt!
+}
+
+type Account @entity {
+  id: ID! # address-market
+  address: Bytes!
+  market: Bytes!
+  borrowShares: BigInt!
+  depositShares: BigInt!
+  isCollateral: Boolean
+  fixedPositions: [FixedPosition!]! @derivedFrom(field: "account")
+}
+
+type FixedPosition @entity {
+  id: ID! # account-market-maturity-(deposit||borrow)(0||1)
+  account: Account!
+  principal: BigInt!
+  fee: BigInt!
+  borrow: Boolean!
+  maturity: Int!
+  rate: BigInt!
+}
+
+type MarketListed @entity {
+  id: ID!
+  market: Bytes!
+  decimals: Int!
+  timestamp: Int!
+  block: Int!
+}
+
+type MarketEntered @entity {
+  id: ID!
+  account: Bytes!
+  market: Bytes!
+  timestamp: Int!
+  block: Int!
+}
+
+type MarketExited @entity {
+  id: ID!
+  account: Bytes!
+  market: Bytes!
+  timestamp: Int!
+  block: Int!
+}
+
+type AdjustFactorSet @entity {
+  id: ID!
+  market: Bytes!
+  adjustFactor: BigInt!
+  timestamp: Int!
+  block: Int!
+}
+
+type LiquidationIncentiveSet @entity {
+  id: ID!
+  liquidator: BigInt!
+  lenders: BigInt!
+  timestamp: Int!
+  block: Int!
+}
+
+type PriceFeedSet @entity {
+  id: ID!
+  market: Bytes!
+  priceFeed: Bytes!
+  timestamp: Int!
+  block: Int!
+}
+
+type Market @entity {
+  id: ID! # market
+  address: Bytes!
+  # global
+  timestamp: Int!
+  block: Int!
+  decimals: Int!
+  priceFeed: Bytes
+  adjustFactor: BigInt
+  assetSymbol: String!
+  symbol: String!
+  asset: Bytes!
+  totalSupply: BigInt!
+  totalFloatingBorrowShares: BigInt!
+  # MarketUpdate
+  lastMarketUpdate: Int
+  floatingAssets: BigInt!
+  floatingDebt: BigInt!
+  floatingBackupBorrowed: BigInt!
+  earningsAccumulator: BigInt!
+  # FloatingDebtUpdate
+  lastFloatingDebtUpdate: Int!
+  # InterestRateModelSet
+  interestRateModel: Bytes!
+  floatingCurveA: BigInt!
+  floatingCurveB: BigInt!
+  floatingMaxUtilization: BigInt!
+  naturalUtilization: BigInt!
+  sigmoidSpeed: BigInt!
+  growthSpeed: BigInt!
+  maxRate: BigInt!
+  spreadFactor: BigInt!
+  timePreference: BigInt!
+  fixedAllocation: BigInt!
+  maturitySpeed: BigInt!
+  fixedCurveA: BigInt!
+  fixedCurveB: BigInt!
+  fixedMaxUtilization: BigInt!
+  # AccumulatorAccrual
+  lastAccumulatorAccrual: Int!
+  # EarningsAccumulatorSmoothFactorSet
+  earningsAccumulatorSmoothFactor: BigInt!
+  # TreasurySet
+  treasury: Bytes!
+  treasuryFeeRate: BigInt!
+  # FixedEarningsUpdate
+  fixedPools: [FixedPool!]! @derivedFrom(field: "market")
+  # MaxFuturePoolsSet
+  maxFuturePools: Int!
+  # BackupFeeRateSet
+  backupFeeRate: BigInt!
+  # ReserveFactorSet
+  reserveFactor: BigInt!
+  # PenaltyRateSet
+  penaltyRate: BigInt!
+  # RewardsControllerSet
+  rewardsController: Bytes
+}
+
+type Config @entity {
+  id: ID!
+  distributionSet: DistributionSet!
+  market: Bytes!
+  reward: Bytes!
+  priceFeed: Bytes!
+  start: BigInt!
+  distributionPeriod: BigInt!
+  targetDebt: BigInt!
+  totalDistribution: BigInt!
+  undistributedFactor: BigInt!
+  flipSpeed: BigInt!
+  compensationFactor: BigInt!
+  transitionFactor: BigInt!
+  borrowAllocationWeightFactor: BigInt!
+  depositAllocationWeightAddend: BigInt!
+  depositAllocationWeightFactor: BigInt!
+}
+
+type DistributionSet @entity {
+  id: ID!
+  market: Bytes!
+  reward: Bytes!
+  config: Config! @derivedFrom(field: "distributionSet")
+  timestamp: Int!
+  block: Int!
+}
+
+type FixedPool @entity {
+  id: ID! # market-maturity
+  market: Market!
+  maturity: Int!
+  timestamp: Int!
+  unassignedEarnings: BigInt!
+}
+
+type MaxFuturePoolsSet @entity {
+  id: ID!
+  market: Bytes!
+  maxFuturePools: Int!
+  timestamp: Int!
+  block: Int!
+}
+
+type PenaltyRateSet @entity {
+  id: ID!
+  market: Bytes!
+  penaltyRate: BigInt!
+  timestamp: Int!
+  block: Int!
+}
+
+type ReserveFactorSet @entity {
+  id: ID!
+  market: Bytes!
+  reserveFactor: BigInt!
+  timestamp: Int!
+  block: Int!
+}
+
+type BackupFeeRateSet @entity {
+  id: ID!
+  market: Bytes!
+  backupFeeRate: BigInt!
+  timestamp: Int!
+  block: Int!
+}
+
+type MarketState @entity {
+  id: ID!
+  market: Market!
+  timestamp: Int!
+  floatingAssets: BigInt
+  totalFloatingBorrowShares: BigInt
+  totalSupply: BigInt!
+  floatingDebt: BigInt
+  floatingBackupBorrowed: BigInt
+  earningsAccumulator: BigInt
+  floatingCurveA: BigInt!
+  floatingCurveB: BigInt!
+  floatingMaxUtilization: BigInt!
+  naturalUtilization: BigInt!
+  sigmoidSpeed: BigInt!
+  growthSpeed: BigInt!
+  maxRate: BigInt!
+  spreadFactor: BigInt!
+  timePreference: BigInt!
+  fixedAllocation: BigInt!
+  maturitySpeed: BigInt!
+  fixedCurveA: BigInt!
+  fixedCurveB: BigInt!
+  fixedMaxUtilization: BigInt!
+  lastAccumulatorAccrual: Int!
+  earningsAccumulatorSmoothFactor: BigInt
+  treasuryFeeRate: BigInt
+  fixedPools: [FixedPoolState!] @derivedFrom(field: "marketState")
+  lastFloatingDebtUpdate: Int!
+  rewardsController: Bytes
+}
+
+type FixedPoolState @entity {
+  id: ID!
+  marketState: MarketState!
+  maturity: Int!
+  timestamp: Int!
+  unassignedEarnings: BigInt!
+  borrowed: BigInt!
+  supplied: BigInt!
+  lastAccrual: Int!
+}
+
+type RewardsControllerSet @entity {
+  id: ID!
+  market: Bytes!
+  rewardsController: Bytes!
+  timestamp: Int!
+  block: Int!
+}
+
+type IndexUpdate @entity {
+  id: ID!
+  market: Bytes!
+  reward: Bytes!
+  borrowIndex: BigInt!
+  depositIndex: BigInt!
+  newUndistributed: BigInt!
+  timestamp: Int!
+}
+
+type RewardsClaim @entity {
+  id: ID!
+  account: Bytes!
+  reward: Bytes!
+  to: Bytes!
+  amount: BigInt!
+}
+
+type AccountClaim @entity {
+  id: ID! # account-reward
+  account: Bytes!
+  reward: Bytes!
+  amount: BigInt!
+}
+
+type TimelockControllerOperation @entity {
+  id: ID!
+  call: TimelockControllerCall!
+  index: Int!
+  target: Bytes!
+  value: BigInt!
+  data: Bytes!
+}
+
+type TimelockControllerCall @entity {
+  id: ID!
+  operations: [TimelockControllerOperation!] @derivedFrom(field: "call")
+  predecessor: Bytes
+  delay: Int!
+  scheduler: Bytes!
+  scheduledAt: Int!
+  canceller: Bytes
+  cancelledAt: Int
+  executor: Bytes
+  executedAt: Int
+}
+
+type TimelockControllerMinDelaySet @entity {
+  id: ID!
+  oldDuration: Int!
+  newDuration: Int!
+  caller: Bytes!
+  block: Int!
+  timestamp: Int!
+}
+
+type RewardAmountNotified @entity {
+  id: ID! #
+  reward: Bytes!
+  amount: BigInt!
+  notifier: Bytes!
+  timestamp: Int!
+}
+
+type StakingSharedFee @entity {
+  id: ID!
+  amount: BigInt!
+  lastUpdate: Int!
+}

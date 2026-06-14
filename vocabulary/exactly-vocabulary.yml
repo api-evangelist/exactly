@@ -1,0 +1,211 @@
+title: Exactly Protocol Vocabulary
+description: >
+  Domain vocabulary and terminology for Exactly Protocol, a decentralized fixed and variable
+  rate credit market protocol on Ethereum, Optimism, and Base. This vocabulary defines key
+  concepts used across the protocol's smart contracts, documentation, and APIs.
+url: https://docs.exact.ly
+terms:
+
+  - term: Market
+    definition: >
+      An ERC-4626-compliant vault contract for a specific underlying asset (e.g., USDC, WETH)
+      that manages both floating (variable) and fixed-rate lending pools. Each market handles
+      deposits, borrows, withdrawals, repayments, and liquidations for its asset.
+    related:
+      - ERC-4626
+      - Maturity Pool
+      - Floating Pool
+    url: https://docs.exact.ly/guides/protocol/market.md
+
+  - term: Auditor
+    definition: >
+      The central risk management smart contract that maintains the list of all active markets,
+      manages collateral factors (adjust factors), computes account liquidity, and controls
+      liquidation eligibility. All borrow operations must pass Auditor checks.
+    related:
+      - Collateral Factor
+      - Account Liquidity
+      - Liquidation
+    url: https://docs.exact.ly/guides/protocol/auditor.md
+
+  - term: Previewer
+    definition: >
+      A read-only peripheral smart contract that provides simulation methods for all core
+      market operations. Allows off-chain queries of expected yields, costs, and account
+      positions without sending any on-chain transaction.
+    related:
+      - Market
+      - FixedPreview
+      - MarketAccount
+    url: https://docs.exact.ly/guides/periphery-contracts/previewer-read-only.md
+
+  - term: Maturity Pool
+    definition: >
+      A fixed-term lending and borrowing pool identified by a Unix timestamp (maturity date).
+      Users who deposit into a maturity pool earn a fixed rate determined at entry; users who
+      borrow pay a fixed rate determined at entry. Funds are locked until maturity unless
+      early exit is triggered with a discount.
+    synonyms:
+      - Fixed Pool
+      - Term Pool
+    related:
+      - Market
+      - Fixed Rate
+      - Early Withdrawal
+
+  - term: Floating Pool
+    definition: >
+      The variable-rate lending and borrowing pool within each Market, where rates adjust
+      continuously based on current utilization according to the Interest Rate Model (IRM).
+      ERC-4626 shares represent proportional ownership of the floating pool.
+    synonyms:
+      - Variable Pool
+    related:
+      - Market
+      - Variable Rate
+      - InterestRateModel
+
+  - term: Adjust Factor
+    definition: >
+      A collateral efficiency parameter (0 to 1, scaled by 1e18) set per market by the Auditor.
+      A user's effective collateral value equals their deposit value multiplied by the adjust
+      factor. Also known as Loan-to-Value (LTV) ratio in traditional finance.
+    synonyms:
+      - Collateral Factor
+      - LTV
+    related:
+      - Auditor
+      - Account Liquidity
+
+  - term: EXA
+    definition: >
+      The native governance token of Exactly Protocol (ERC-20). Distributed to depositors
+      and borrowers through the RewardsController as incentives. EXA holders can participate
+      in protocol governance through Snapshot voting.
+    related:
+      - esEXA
+      - RewardsController
+      - Governance
+    url: https://docs.exact.ly/governance/protocol-governance
+
+  - term: esEXA
+    definition: >
+      Escrowed EXA — a non-transferable reward token that vests into EXA over time through
+      the stEXA staking program. Earned alongside EXA through the RewardsController and
+      designed to align long-term incentives for protocol participants.
+    synonyms:
+      - Escrowed EXA
+    related:
+      - EXA
+      - RewardsController
+      - stEXA
+    url: https://docs.exact.ly/governance/exa-token/esexa
+
+  - term: RewardsController
+    definition: >
+      The smart contract that manages the distribution of EXA and esEXA tokens to depositors
+      and borrowers. Implements a utilization-based reward split algorithm that dynamically
+      adjusts the proportion of rewards going to each side based on market activity.
+    related:
+      - EXA
+      - esEXA
+      - Market
+    url: https://docs.exact.ly/guides/protocol/rewardscontroller.md
+
+  - term: InterestRateModel
+    definition: >
+      The smart contract implementing the Continuous Non-Linear Interest Rate Model (CNLIRM)
+      used by Exactly Protocol to price both floating and fixed rate operations. The model
+      uses separate sigmoid curves for floating and fixed rates with parameters including
+      natural rate, natural utilization, spread factor, and maturity speed.
+    synonyms:
+      - IRM
+      - CNLIRM
+    related:
+      - Floating Pool
+      - Maturity Pool
+      - Interest Rate
+    url: https://docs.exact.ly/resources/white-paper
+
+  - term: Dynamic Close Factor
+    definition: >
+      A liquidation mechanism that limits how much of a borrower's debt can be repaid in a
+      single liquidation transaction, based on the borrower's health factor. As health
+      deteriorates, the close factor increases, allowing larger liquidations of more
+      distressed positions.
+    related:
+      - Liquidation
+      - Health Factor
+      - Auditor
+    url: https://docs.exact.ly/features/dynamic-close-factor
+
+  - term: Earnings Accumulator
+    definition: >
+      A mechanism that smooths the distribution of protocol earnings (from penalties, early
+      withdrawal fees, and liquidations) over time to prevent sudden changes in exchange
+      rates. The accumulator distributes earnings proportionally to the floating pool.
+    related:
+      - Market
+      - Early Withdrawal
+      - Bad Debt
+    url: https://docs.exact.ly/features/earnings-accumulator
+
+  - term: Bad Debt
+    definition: >
+      A borrower's outstanding debt that remains after all their collateral has been seized
+      through liquidation. The Earnings Accumulator covers bad debt to protect depositors,
+      distributing the loss proportionally across the floating pool.
+    related:
+      - Liquidation
+      - Earnings Accumulator
+      - clearBadDebt
+
+  - term: Health Factor
+    definition: >
+      A metric representing an account's collateralization ratio. Computed as sumCollateral
+      divided by sumDebt (both from the Auditor's accountLiquidity). A health factor below
+      1.0 means the account is undercollateralized and eligible for liquidation.
+    related:
+      - Auditor
+      - Account Liquidity
+      - Liquidation
+
+  - term: The Graph
+    definition: >
+      A decentralized indexing protocol used by Exactly Protocol to expose indexed on-chain
+      data via GraphQL. Exactly maintains subgraphs on Ethereum mainnet and Optimism that
+      index all market events, user positions, and protocol state.
+    related:
+      - Subgraph
+      - GraphQL
+    url: https://docs.exact.ly/guides/the-graph.md
+
+  - term: ERC-4626
+    definition: >
+      The Ethereum token standard for tokenized vaults. Exactly Protocol's Market contracts
+      implement ERC-4626, making each market a yield-bearing vault with standard methods
+      for deposits, withdrawals, minting, and redemption, and a shares/assets accounting model.
+    related:
+      - Market
+      - Shares
+      - Assets
+
+  - term: Subgraph
+    definition: >
+      An Exactly Protocol deployment on The Graph network that indexes all on-chain events
+      and state changes. Provides a GraphQL API for querying historical and real-time data
+      about markets, user positions, liquidations, and reward distributions.
+    related:
+      - The Graph
+      - GraphQL
+    url: https://docs.exact.ly/guides/the-graph.md
+
+  - term: Liquidation Incentive
+    definition: >
+      A bonus paid to liquidators for repaying a borrower's debt and seizing their collateral.
+      Consists of a liquidator bonus and a lenders' fee, both configured in the Auditor's
+      liquidationIncentive parameter.
+    related:
+      - Liquidation
+      - Auditor
+      - Dynamic Close Factor

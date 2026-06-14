@@ -1,0 +1,91 @@
+{
+  "title": "Get All Market Accounts",
+  "description": "Example request and response for retrieving all market positions for an Ethereum address using the Exactly Protocol Previewer contract's exactly() method.",
+  "request": {
+    "method": "POST",
+    "path": "/previewer/exactly",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "account": "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
+    }
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": [
+      {
+        "market": "0x430e85B5Ab78C2B0Ec29a0e8D79c3Cd95f84bbE",
+        "symbol": "USDC",
+        "asset": "0x7F5c764cBc14f9669B88837ca1490cCa17c31607",
+        "decimals": 6,
+        "usdPrice": "1000000000000000000",
+        "adjustFactor": "850000000000000000",
+        "maxFuturePools": 3,
+        "fixedPools": [
+          {
+            "maturity": 1735689600,
+            "supplied": "500000000000",
+            "borrowed": "220000000000",
+            "depositRate": "48000000000000000",
+            "minBorrowRate": "55000000000000000",
+            "optimalDeposit": "280000000000"
+          },
+          {
+            "maturity": 1738368000,
+            "supplied": "300000000000",
+            "borrowed": "180000000000",
+            "depositRate": "52000000000000000",
+            "minBorrowRate": "59000000000000000",
+            "optimalDeposit": "120000000000"
+          }
+        ],
+        "floatingBorrowRate": "62000000000000000",
+        "floatingDepositAPR": "38000000000000000",
+        "totalFloatingDepositAssets": "2500000000000",
+        "totalFloatingBorrowAssets": "1800000000000",
+        "floatingDepositShares": "0",
+        "floatingDepositAssets": "0",
+        "floatingBorrowShares": "0",
+        "floatingBorrowAssets": "0",
+        "isCollateral": false,
+        "fixedDepositPositions": [],
+        "fixedBorrowPositions": []
+      },
+      {
+        "market": "0x8340E7D498d8e70D6F7C0E3e29ECA1f2a6b1E0dC",
+        "symbol": "WETH",
+        "asset": "0x4200000000000000000000000000000000000006",
+        "decimals": 18,
+        "usdPrice": "3200000000000000000000",
+        "adjustFactor": "870000000000000000",
+        "maxFuturePools": 3,
+        "fixedPools": [
+          {
+            "maturity": 1735689600,
+            "supplied": "450000000000000000000",
+            "borrowed": "120000000000000000000",
+            "depositRate": "22000000000000000",
+            "minBorrowRate": "28000000000000000",
+            "optimalDeposit": "330000000000000000000"
+          }
+        ],
+        "floatingBorrowRate": "35000000000000000",
+        "floatingDepositAPR": "18000000000000000",
+        "totalFloatingDepositAssets": "850000000000000000000",
+        "totalFloatingBorrowAssets": "410000000000000000000",
+        "floatingDepositShares": "1500000000000000000",
+        "floatingDepositAssets": "1502000000000000000",
+        "floatingBorrowShares": "0",
+        "floatingBorrowAssets": "0",
+        "isCollateral": true,
+        "fixedDepositPositions": [],
+        "fixedBorrowPositions": []
+      }
+    ]
+  },
+  "notes": "Response shows all markets on Optimism with the account's positions. The account has 1.502 WETH deposited at variable rate in the WETH market with collateral enabled, earning ~1.8% APR. The USDC market shows market-wide statistics but zero account positions. All rates are scaled by 1e18 (divide by 1e16 for percentage). USDC amounts are in 6-decimal units; WETH amounts are in 18-decimal units."
+}

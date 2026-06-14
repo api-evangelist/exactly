@@ -1,0 +1,605 @@
+openapi: 3.1.0
+info:
+  title: Exactly Protocol Market API
+  description: >
+    ERC-4626-compliant smart contract interface for the core Market contract on
+    Exactly Protocol. Exposes view and write methods for depositing, borrowing,
+    withdrawing, repaying, minting, redeeming, and liquidating positions at both
+    variable and fixed rates. Includes account snapshots, debt previews, and
+    floating asset calculations. Deployed on Ethereum, Optimism, and Base.
+  version: "1.0.0"
+  contact:
+    name: Exactly Protocol
+    url: https://docs.exact.ly
+  license:
+    name: MIT
+    url: https://github.com/exactly/protocol/blob/main/LICENSE-MIT
+externalDocs:
+  description: Exactly Protocol Market Documentation
+  url: https://docs.exact.ly/guides/protocol/market.md
+servers:
+  - url: https://app.exact.ly
+    description: Exactly Protocol App
+tags:
+  - name: Market State
+    description: View methods for querying market state
+  - name: ERC-4626
+    description: ERC-4626 vault standard methods
+  - name: Variable Rate
+    description: Floating/variable rate deposit and borrow operations
+  - name: Fixed Rate
+    description: Fixed rate maturity pool operations
+  - name: Liquidations
+    description: Liquidation and bad debt clearing operations
+paths:
+  /market/accountSnapshot:
+    post:
+      summary: Get account snapshot
+      description: Returns the total floating deposit assets and total owed debt for an account.
+      operationId: accountSnapshot
+      tags:
+        - Market State
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - account
+              properties:
+                account:
+                  type: string
+                  description: Address to snapshot
+                  pattern: "^0x[a-fA-F0-9]{40}$"
+      responses:
+        "200":
+          description: Account snapshot
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  depositAssets:
+                    type: string
+                    description: Total floating deposit assets (in wei)
+                  owedDebt:
+                    type: string
+                    description: Total owed variable debt (in wei)
+  /market/previewDebt:
+    post:
+      summary: Preview total debt for a borrower
+      description: Returns the total outstanding variable debt for a borrower.
+      operationId: previewDebt
+      tags:
+        - Market State
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - borrower
+              properties:
+                borrower:
+                  type: string
+                  description: Address of the borrower
+                  pattern: "^0x[a-fA-F0-9]{40}$"
+      responses:
+        "200":
+          description: Total debt amount
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  debt:
+                    type: string
+                    description: Total outstanding debt in underlying asset units (in wei)
+  /market/totalAssets:
+    get:
+      summary: Get total assets
+      description: Returns total assets managed by the market vault (ERC-4626).
+      operationId: totalAssets
+      tags:
+        - ERC-4626
+        - Market State
+      responses:
+        "200":
+          description: Total managed assets
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  totalAssets:
+                    type: string
+                    description: Total assets in underlying token units (in wei)
+  /market/convertToAssets:
+    post:
+      summary: Convert shares to assets
+      description: Returns the amount of underlying assets equivalent to the given number of shares.
+      operationId: convertToAssets
+      tags:
+        - ERC-4626
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - shares
+              properties:
+                shares:
+                  type: string
+                  description: Number of shares to convert
+      responses:
+        "200":
+          description: Equivalent asset amount
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  assets:
+                    type: string
+                    description: Equivalent assets (in wei)
+  /market/convertToShares:
+    post:
+      summary: Convert assets to shares
+      description: Returns the number of shares equivalent to the given amount of underlying assets.
+      operationId: convertToShares
+      tags:
+        - ERC-4626
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - assets
+              properties:
+                assets:
+                  type: string
+                  description: Amount of assets to convert (in wei)
+      responses:
+        "200":
+          description: Equivalent share amount
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  shares:
+                    type: string
+                    description: Equivalent shares
+  /market/deposit:
+    post:
+      summary: Deposit assets at variable rate
+      description: >
+        Deposits underlying assets into the floating pool and mints ERC-4626 shares
+        to the receiver. Returns the number of shares minted.
+      operationId: deposit
+      tags:
+        - Variable Rate
+        - ERC-4626
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DepositRequest"
+      responses:
+        "200":
+          description: Shares minted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  shares:
+                    type: string
+                    description: Number of shares minted to receiver
+  /market/withdraw:
+    post:
+      summary: Withdraw assets at variable rate
+      description: >
+        Withdraws a specific amount of underlying assets from the floating pool,
+        burning the required shares from the owner's balance.
+      operationId: withdraw
+      tags:
+        - Variable Rate
+        - ERC-4626
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WithdrawRequest"
+      responses:
+        "200":
+          description: Shares burned
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  shares:
+                    type: string
+                    description: Number of shares burned
+  /market/borrow:
+    post:
+      summary: Borrow assets at variable rate
+      description: >
+        Borrows assets from the floating pool at a variable interest rate and
+        sends them to the receiver. Returns the borrow shares issued.
+      operationId: borrow
+      tags:
+        - Variable Rate
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - assets
+                - receiver
+                - borrower
+              properties:
+                assets:
+                  type: string
+                  description: Amount to borrow (in wei)
+                receiver:
+                  type: string
+                  description: Address to receive the borrowed assets
+                  pattern: "^0x[a-fA-F0-9]{40}$"
+                borrower:
+                  type: string
+                  description: Address whose collateral backs the borrow
+                  pattern: "^0x[a-fA-F0-9]{40}$"
+      responses:
+        "200":
+          description: Borrow shares issued
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  borrowShares:
+                    type: string
+                    description: Number of borrow shares issued
+  /market/repay:
+    post:
+      summary: Repay variable rate debt
+      description: >
+        Repays a specific amount of assets toward a variable rate borrow position.
+        Returns the actual assets repaid and borrow shares burned.
+      operationId: repay
+      tags:
+        - Variable Rate
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - assets
+                - borrower
+              properties:
+                assets:
+                  type: string
+                  description: Amount to repay (in wei)
+                borrower:
+                  type: string
+                  description: Address of the borrower whose debt is being repaid
+                  pattern: "^0x[a-fA-F0-9]{40}$"
+      responses:
+        "200":
+          description: Repayment result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  actualRepay:
+                    type: string
+                    description: Actual assets repaid (in wei)
+                  borrowShares:
+                    type: string
+                    description: Borrow shares burned
+  /market/depositAtMaturity:
+    post:
+      summary: Deposit assets at a fixed rate maturity pool
+      description: >
+        Deposits assets into a specific maturity pool to earn a fixed rate of
+        return. The minAssetsRequired parameter protects against slippage.
+      operationId: depositAtMaturity
+      tags:
+        - Fixed Rate
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - maturity
+                - assets
+                - minAssetsRequired
+                - receiver
+              properties:
+                maturity:
+                  type: integer
+                  description: Unix timestamp of the maturity pool
+                assets:
+                  type: string
+                  description: Amount to deposit (in wei)
+                minAssetsRequired:
+                  type: string
+                  description: Minimum position assets required (slippage protection, in wei)
+                receiver:
+                  type: string
+                  description: Address to receive the fixed deposit position
+                  pattern: "^0x[a-fA-F0-9]{40}$"
+      responses:
+        "200":
+          description: Position assets received
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  positionAssets:
+                    type: string
+                    description: Total position (principal + fee) at maturity (in wei)
+  /market/withdrawAtMaturity:
+    post:
+      summary: Withdraw assets from a fixed rate maturity pool
+      description: >
+        Withdraws a fixed deposit position before or at maturity. Early withdrawal
+        incurs a discount; at or after maturity no discount applies.
+      operationId: withdrawAtMaturity
+      tags:
+        - Fixed Rate
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - maturity
+                - positionAssets
+                - minAssetsRequired
+                - receiver
+                - owner
+              properties:
+                maturity:
+                  type: integer
+                  description: Unix timestamp of the maturity pool
+                positionAssets:
+                  type: string
+                  description: Amount of position assets to withdraw (in wei)
+                minAssetsRequired:
+                  type: string
+                  description: Minimum assets to receive (slippage protection, in wei)
+                receiver:
+                  type: string
+                  description: Address to receive withdrawn assets
+                  pattern: "^0x[a-fA-F0-9]{40}$"
+                owner:
+                  type: string
+                  description: Address of the position owner
+                  pattern: "^0x[a-fA-F0-9]{40}$"
+      responses:
+        "200":
+          description: Discounted assets received
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  assetsDiscounted:
+                    type: string
+                    description: Actual assets received after discount (in wei)
+  /market/borrowAtMaturity:
+    post:
+      summary: Borrow assets at a fixed rate maturity pool
+      description: >
+        Borrows assets from a specific maturity pool at a fixed interest rate.
+        The maxAssets parameter limits slippage on the borrow fee.
+      operationId: borrowAtMaturity
+      tags:
+        - Fixed Rate
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - maturity
+                - assets
+                - maxAssets
+                - receiver
+                - borrower
+              properties:
+                maturity:
+                  type: integer
+                  description: Unix timestamp of the maturity pool
+                assets:
+                  type: string
+                  description: Amount to borrow (in wei)
+                maxAssets:
+                  type: string
+                  description: Maximum total owed allowed (slippage protection, in wei)
+                receiver:
+                  type: string
+                  description: Address to receive the borrowed assets
+                  pattern: "^0x[a-fA-F0-9]{40}$"
+                borrower:
+                  type: string
+                  description: Address whose collateral backs the borrow
+                  pattern: "^0x[a-fA-F0-9]{40}$"
+      responses:
+        "200":
+          description: Total assets owed at maturity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  assetsOwed:
+                    type: string
+                    description: Total assets owed at maturity (principal + fee, in wei)
+  /market/repayAtMaturity:
+    post:
+      summary: Repay a fixed rate borrow at maturity
+      description: >
+        Repays a fixed-rate borrow position at or before its maturity date.
+        Early repayment may qualify for a discount.
+      operationId: repayAtMaturity
+      tags:
+        - Fixed Rate
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - maturity
+                - positionAssets
+                - maxAssets
+                - borrower
+              properties:
+                maturity:
+                  type: integer
+                  description: Unix timestamp of the maturity pool
+                positionAssets:
+                  type: string
+                  description: Position debt to repay (in wei)
+                maxAssets:
+                  type: string
+                  description: Maximum assets allowed to spend (slippage protection, in wei)
+                borrower:
+                  type: string
+                  description: Address of the borrower
+                  pattern: "^0x[a-fA-F0-9]{40}$"
+      responses:
+        "200":
+          description: Actual repaid assets
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  actualRepayAssets:
+                    type: string
+                    description: Actual assets used for repayment (in wei)
+  /market/liquidate:
+    post:
+      summary: Liquidate an undercollateralized borrower
+      description: >
+        Liquidates a borrower's variable rate debt when their health factor falls
+        below the threshold. The liquidator repays up to maxAssets of debt and
+        receives collateral from the seizeMarket.
+      operationId: liquidate
+      tags:
+        - Liquidations
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - borrower
+                - maxAssets
+                - seizeMarket
+              properties:
+                borrower:
+                  type: string
+                  description: Address of the undercollateralized borrower
+                  pattern: "^0x[a-fA-F0-9]{40}$"
+                maxAssets:
+                  type: string
+                  description: Maximum assets to repay (in wei)
+                seizeMarket:
+                  type: string
+                  description: Market from which to seize collateral
+                  pattern: "^0x[a-fA-F0-9]{40}$"
+      responses:
+        "200":
+          description: Assets repaid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  repaidAssets:
+                    type: string
+                    description: Total assets repaid (in wei)
+  /market/clearBadDebt:
+    post:
+      summary: Clear bad debt for a borrower
+      description: >
+        Clears bad debt from a borrower's account by using the earnings accumulator.
+        Only callable when the borrower's collateral has been fully seized.
+      operationId: clearBadDebt
+      tags:
+        - Liquidations
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - borrower
+              properties:
+                borrower:
+                  type: string
+                  description: Address of the borrower with bad debt
+                  pattern: "^0x[a-fA-F0-9]{40}$"
+      responses:
+        "200":
+          description: Bad debt cleared successfully
+components:
+  schemas:
+    DepositRequest:
+      type: object
+      required:
+        - assets
+        - receiver
+      properties:
+        assets:
+          type: string
+          description: Amount of underlying assets to deposit (in wei)
+        receiver:
+          type: string
+          description: Address to receive the minted shares
+          pattern: "^0x[a-fA-F0-9]{40}$"
+    WithdrawRequest:
+      type: object
+      required:
+        - assets
+        - receiver
+        - owner
+      properties:
+        assets:
+          type: string
+          description: Amount of underlying assets to withdraw (in wei)
+        receiver:
+          type: string
+          description: Address to receive the withdrawn assets
+          pattern: "^0x[a-fA-F0-9]{40}$"
+        owner:
+          type: string
+          description: Address of the shares owner
+          pattern: "^0x[a-fA-F0-9]{40}$"

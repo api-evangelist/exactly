@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/exactly/refs/heads/main/json-schema/reward-config.json",
+  "title": "RewardConfig",
+  "description": "Full reward distribution configuration for a market-reward token pair in the Exactly Protocol RewardsController, defining how EXA or esEXA tokens are distributed to depositors and borrowers.",
+  "type": "object",
+  "properties": {
+    "market": {
+      "type": "string",
+      "description": "Address of the Market contract receiving this reward distribution",
+      "pattern": "^0x[a-fA-F0-9]{40}$"
+    },
+    "reward": {
+      "type": "string",
+      "description": "Address of the ERC-20 reward token (EXA or esEXA)",
+      "pattern": "^0x[a-fA-F0-9]{40}$"
+    },
+    "priceFeed": {
+      "type": "string",
+      "description": "Chainlink-compatible price feed address for the reward token, used to value rewards in USD",
+      "pattern": "^0x[a-fA-F0-9]{40}$"
+    },
+    "start": {
+      "type": "integer",
+      "description": "Unix timestamp when the reward distribution begins",
+      "minimum": 0
+    },
+    "distributionPeriod": {
+      "type": "integer",
+      "description": "Duration of the distribution program in seconds",
+      "minimum": 0
+    },
+    "targetDebt": {
+      "type": "string",
+      "description": "Target total borrow debt the program aims to incentivize, in underlying token wei"
+    },
+    "totalDistribution": {
+      "type": "string",
+      "description": "Total reward tokens to be distributed over the entire program period, in reward token wei"
+    },
+    "undistributedFactor": {
+      "type": "string",
+      "description": "Factor applied to undistributed rewards that accumulate when utilization is below target, scaled by 1e18"
+    },
+    "flipSpeed": {
+      "type": "string",
+      "description": "Speed at which the deposit/borrow reward split adjusts toward the optimal ratio, scaled by 1e18"
+    },
+    "compensationFactor": {
+      "type": "string",
+      "description": "Factor that compensates depositors when borrow activity is below target, scaled by 1e18"
+    },
+    "transitionFactor": {
+      "type": "string",
+      "description": "Sigmoid curve factor controlling the smooth transition of reward allocation, scaled by 1e18"
+    },
+    "borrowAllocationWeightFactor": {
+      "type": "string",
+      "description": "Weight factor applied to borrow-side reward allocation calculation, scaled by 1e18"
+    },
+    "depositAllocationWeightAddend": {
+      "type": "string",
+      "description": "Addend applied to deposit-side reward allocation weight, scaled by 1e18"
+    },
+    "depositAllocationWeightFactor": {
+      "type": "string",
+      "description": "Weight factor applied to deposit-side reward allocation calculation, scaled by 1e18"
+    }
+  },
+  "required": ["market", "reward", "start", "distributionPeriod", "totalDistribution"]
+}

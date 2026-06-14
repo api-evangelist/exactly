@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/exactly/refs/heads/main/json-schema/fixed-preview.json",
+  "title": "FixedPreview",
+  "description": "Preview result for a fixed-rate pool operation on Exactly Protocol, returned by the Previewer contract's previewDepositAtMaturity, previewBorrowAtMaturity, previewRepayAtMaturity, and previewWithdrawAtMaturity methods.",
+  "type": "object",
+  "properties": {
+    "maturity": {
+      "type": "integer",
+      "description": "Unix timestamp of the maturity pool",
+      "minimum": 0
+    },
+    "assets": {
+      "type": "string",
+      "description": "Net assets received or required for the operation, in underlying token wei units. For deposits: positionAssets at maturity. For borrows: total owed at maturity. For repay: actual cost with early discount. For withdraw: actual proceeds after discount."
+    },
+    "utilization": {
+      "type": "string",
+      "description": "Pool utilization rate after this operation would execute, scaled by 1e18. Values range from 0 (0%) to 1e18 (100%)."
+    }
+  },
+  "required": ["maturity", "assets", "utilization"],
+  "examples": [
+    {
+      "maturity": 1735689600,
+      "assets": "1050000000000000000000",
+      "utilization": "450000000000000000"
+    }
+  ]
+}

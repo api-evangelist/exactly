@@ -1,0 +1,191 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "xact": "https://exact.ly/vocab/",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "fibo": "https://spec.edmcouncil.org/fibo/ontology/",
+
+    "Market": "xact:Market",
+    "Auditor": "xact:Auditor",
+    "Previewer": "xact:Previewer",
+    "MaturityPool": "xact:MaturityPool",
+    "FloatingPool": "xact:FloatingPool",
+    "RewardsController": "xact:RewardsController",
+    "InterestRateModel": "xact:InterestRateModel",
+    "MarketAccount": "xact:MarketAccount",
+    "FixedPreview": "xact:FixedPreview",
+    "FixedPosition": "xact:FixedPosition",
+    "RewardConfig": "xact:RewardConfig",
+    "MarketOperation": "xact:MarketOperation",
+
+    "market": {
+      "@id": "xact:market",
+      "@type": "xsd:string"
+    },
+    "symbol": {
+      "@id": "schema:tickerSymbol",
+      "@type": "xsd:string"
+    },
+    "asset": {
+      "@id": "xact:underlyingAsset",
+      "@type": "xsd:string"
+    },
+    "decimals": {
+      "@id": "xact:tokenDecimals",
+      "@type": "xsd:integer"
+    },
+    "usdPrice": {
+      "@id": "schema:price",
+      "@type": "xsd:string"
+    },
+    "adjustFactor": {
+      "@id": "xact:collateralFactor",
+      "@type": "xsd:string"
+    },
+    "maxFuturePools": {
+      "@id": "xact:maxFuturePools",
+      "@type": "xsd:integer"
+    },
+    "maturity": {
+      "@id": "xact:maturityTimestamp",
+      "@type": "xsd:integer"
+    },
+    "supplied": {
+      "@id": "xact:totalSupplied",
+      "@type": "xsd:string"
+    },
+    "borrowed": {
+      "@id": "xact:totalBorrowed",
+      "@type": "xsd:string"
+    },
+    "assets": {
+      "@id": "xact:assetAmount",
+      "@type": "xsd:string"
+    },
+    "shares": {
+      "@id": "xact:shareAmount",
+      "@type": "xsd:string"
+    },
+    "utilization": {
+      "@id": "xact:poolUtilization",
+      "@type": "xsd:string"
+    },
+    "floatingBorrowRate": {
+      "@id": "xact:variableBorrowRate",
+      "@type": "xsd:string"
+    },
+    "floatingDepositAPR": {
+      "@id": "xact:variableDepositRate",
+      "@type": "xsd:string"
+    },
+    "depositRate": {
+      "@id": "xact:fixedDepositRate",
+      "@type": "xsd:string"
+    },
+    "minBorrowRate": {
+      "@id": "xact:minimumFixedBorrowRate",
+      "@type": "xsd:string"
+    },
+    "isCollateral": {
+      "@id": "xact:enabledAsCollateral",
+      "@type": "xsd:boolean"
+    },
+    "principal": {
+      "@id": "xact:positionPrincipal",
+      "@type": "xsd:string"
+    },
+    "fee": {
+      "@id": "xact:positionFee",
+      "@type": "xsd:string"
+    },
+    "reward": {
+      "@id": "xact:rewardToken",
+      "@type": "xsd:string"
+    },
+    "totalDistribution": {
+      "@id": "xact:totalRewardDistribution",
+      "@type": "xsd:string"
+    },
+    "distributionPeriod": {
+      "@id": "xact:rewardDistributionPeriod",
+      "@type": "xsd:integer"
+    },
+    "claimable": {
+      "@id": "xact:claimableRewards",
+      "@type": "xsd:string"
+    },
+    "rewardsList": {
+      "@id": "xact:rewardTokenList",
+      "@container": "@list"
+    },
+    "claimedAmounts": {
+      "@id": "xact:claimedAmounts",
+      "@container": "@list"
+    },
+    "fixedPools": {
+      "@id": "xact:fixedRatePools",
+      "@container": "@list"
+    },
+    "fixedDepositPositions": {
+      "@id": "xact:fixedDepositPositions",
+      "@container": "@list"
+    },
+    "fixedBorrowPositions": {
+      "@id": "xact:fixedBorrowPositions",
+      "@container": "@list"
+    },
+    "marketOperations": {
+      "@id": "xact:marketOperations",
+      "@container": "@list"
+    },
+    "sumCollateral": {
+      "@id": "xact:totalCollateralValue",
+      "@type": "xsd:string"
+    },
+    "sumDebtPlusEffects": {
+      "@id": "xact:totalDebtWithEffects",
+      "@type": "xsd:string"
+    },
+    "lendersAssets": {
+      "@id": "xact:lenderIncentiveAssets",
+      "@type": "xsd:string"
+    },
+    "seizeAssets": {
+      "@id": "xact:seizedCollateralAssets",
+      "@type": "xsd:string"
+    },
+    "repaidAssets": {
+      "@id": "xact:liquidationRepaidAssets",
+      "@type": "xsd:string"
+    },
+    "borrowShares": {
+      "@id": "xact:borrowShares",
+      "@type": "xsd:string"
+    },
+    "floatingDepositShares": {
+      "@id": "xact:floatingDepositShares",
+      "@type": "xsd:string"
+    },
+    "floatingDepositAssets": {
+      "@id": "xact:floatingDepositAssets",
+      "@type": "xsd:string"
+    },
+    "floatingBorrowShares": {
+      "@id": "xact:floatingBorrowShares",
+      "@type": "xsd:string"
+    },
+    "floatingBorrowAssets": {
+      "@id": "xact:floatingBorrowAssets",
+      "@type": "xsd:string"
+    },
+    "totalFloatingDepositAssets": {
+      "@id": "xact:totalFloatingDepositAssets",
+      "@type": "xsd:string"
+    },
+    "totalFloatingBorrowAssets": {
+      "@id": "xact:totalFloatingBorrowAssets",
+      "@type": "xsd:string"
+    }
+  }
+}

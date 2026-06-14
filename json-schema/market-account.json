@@ -1,0 +1,159 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/exactly/refs/heads/main/json-schema/market-account.json",
+  "title": "MarketAccount",
+  "description": "Comprehensive snapshot of an Exactly Protocol market and an account's positions within it, as returned by the Previewer contract's exactly() method.",
+  "type": "object",
+  "properties": {
+    "market": {
+      "type": "string",
+      "description": "Address of the Market contract",
+      "pattern": "^0x[a-fA-F0-9]{40}$"
+    },
+    "symbol": {
+      "type": "string",
+      "description": "ERC-20 symbol of the underlying asset (e.g., USDC, WETH)"
+    },
+    "asset": {
+      "type": "string",
+      "description": "Address of the underlying ERC-20 asset",
+      "pattern": "^0x[a-fA-F0-9]{40}$"
+    },
+    "decimals": {
+      "type": "integer",
+      "description": "Decimal precision of the underlying asset",
+      "minimum": 0,
+      "maximum": 18
+    },
+    "usdPrice": {
+      "type": "string",
+      "description": "USD price of the underlying asset, scaled by 1e18"
+    },
+    "adjustFactor": {
+      "type": "string",
+      "description": "Collateral adjust factor (LTV) for this market, scaled by 1e18. E.g., 8e17 = 80%."
+    },
+    "maxFuturePools": {
+      "type": "integer",
+      "description": "Maximum number of concurrent active maturity pools",
+      "minimum": 1
+    },
+    "fixedPools": {
+      "type": "array",
+      "description": "Active fixed-rate maturity pool summaries for this market",
+      "items": {
+        "$ref": "#/$defs/FixedPool"
+      }
+    },
+    "floatingBorrowRate": {
+      "type": "string",
+      "description": "Current annualized variable borrow rate, scaled by 1e18"
+    },
+    "floatingDepositAPR": {
+      "type": "string",
+      "description": "Current annualized variable deposit yield, scaled by 1e18"
+    },
+    "totalFloatingDepositAssets": {
+      "type": "string",
+      "description": "Total assets deposited at variable rate in this market (in wei)"
+    },
+    "totalFloatingBorrowAssets": {
+      "type": "string",
+      "description": "Total assets borrowed at variable rate from this market (in wei)"
+    },
+    "floatingDepositShares": {
+      "type": "string",
+      "description": "Account's ERC-4626 deposit shares in this market"
+    },
+    "floatingDepositAssets": {
+      "type": "string",
+      "description": "Account's variable deposit balance in underlying units (in wei)"
+    },
+    "floatingBorrowShares": {
+      "type": "string",
+      "description": "Account's variable borrow shares in this market"
+    },
+    "floatingBorrowAssets": {
+      "type": "string",
+      "description": "Account's variable borrow balance in underlying units (in wei)"
+    },
+    "isCollateral": {
+      "type": "boolean",
+      "description": "Whether the account has enabled this market as collateral"
+    },
+    "fixedDepositPositions": {
+      "type": "array",
+      "description": "Account's fixed-rate deposit positions across maturities",
+      "items": {
+        "$ref": "#/$defs/FixedPosition"
+      }
+    },
+    "fixedBorrowPositions": {
+      "type": "array",
+      "description": "Account's fixed-rate borrow positions across maturities",
+      "items": {
+        "$ref": "#/$defs/FixedPosition"
+      }
+    }
+  },
+  "required": ["market", "symbol", "asset", "decimals", "usdPrice", "adjustFactor", "maxFuturePools", "fixedPools", "floatingBorrowRate", "floatingDepositAPR", "isCollateral"],
+  "$defs": {
+    "FixedPool": {
+      "type": "object",
+      "description": "Summary of a fixed-rate maturity pool",
+      "properties": {
+        "maturity": {
+          "type": "integer",
+          "description": "Unix timestamp at which this pool matures"
+        },
+        "supplied": {
+          "type": "string",
+          "description": "Total assets supplied to this maturity pool (in wei)"
+        },
+        "borrowed": {
+          "type": "string",
+          "description": "Total assets borrowed from this maturity pool (in wei)"
+        },
+        "depositRate": {
+          "type": "string",
+          "description": "Annualized fixed deposit APR for this pool, scaled by 1e18"
+        },
+        "minBorrowRate": {
+          "type": "string",
+          "description": "Minimum fixed borrow APR for this pool, scaled by 1e18"
+        },
+        "optimalDeposit": {
+          "type": "string",
+          "description": "Optimal deposit to maximize yield in this pool (in wei)"
+        }
+      },
+      "required": ["maturity", "supplied", "borrowed"]
+    },
+    "FixedPosition": {
+      "type": "object",
+      "description": "A fixed-rate deposit or borrow position at a specific maturity",
+      "properties": {
+        "maturity": {
+          "type": "integer",
+          "description": "Unix timestamp of the maturity pool"
+        },
+        "position": {
+          "type": "object",
+          "description": "Principal and fee components of the position",
+          "properties": {
+            "principal": {
+              "type": "string",
+              "description": "Principal amount of the position (in wei)"
+            },
+            "fee": {
+              "type": "string",
+              "description": "Fee (interest) component of the position (in wei)"
+            }
+          },
+          "required": ["principal", "fee"]
+        }
+      },
+      "required": ["maturity", "position"]
+    }
+  }
+}

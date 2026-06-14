@@ -1,0 +1,28 @@
+{
+  "title": "Preview Fixed Deposit at Maturity",
+  "description": "Example request and response for previewing a 1000 USDC fixed-rate deposit at a specific maturity pool using the Exactly Protocol Previewer contract.",
+  "request": {
+    "method": "POST",
+    "path": "/previewer/previewDepositAtMaturity",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "market": "0x430e85B5Ab78C2B0Ec29a0e8D79c3Cd95f84bbE",
+      "maturity": 1735689600,
+      "assets": "1000000000"
+    }
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "maturity": 1735689600,
+      "assets": "1047320000",
+      "utilization": "452000000000000000"
+    }
+  },
+  "notes": "The assets field in the response represents the total position value (principal + fixed interest) the depositor will receive at maturity. In this example, depositing 1000 USDC yields 1047.32 USDC at maturity (~4.73% APR). The utilization is 45.2% after this deposit. Market address is the Optimism USDC market. Maturity 1735689600 = 2025-01-01 00:00:00 UTC. Assets denominated in USDC (6 decimals)."
+}

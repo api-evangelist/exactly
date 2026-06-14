@@ -1,0 +1,475 @@
+openapi: 3.1.0
+info:
+  title: Exactly Protocol RewardsController API
+  description: >
+    Smart contract interface for querying and claiming EXA and esEXA token rewards
+    distributed to depositors and borrowers on Exactly Protocol. Supports querying
+    claimable rewards, reward configurations, distribution timelines, reward indexes,
+    and claiming rewards across all market operations. Deployed on Ethereum,
+    Optimism, and Base.
+  version: "1.0.0"
+  contact:
+    name: Exactly Protocol
+    url: https://docs.exact.ly
+  license:
+    name: MIT
+    url: https://github.com/exactly/protocol/blob/main/LICENSE-MIT
+externalDocs:
+  description: Exactly Protocol RewardsController Documentation
+  url: https://docs.exact.ly/guides/protocol/rewardscontroller.md
+servers:
+  - url: https://app.exact.ly
+    description: Exactly Protocol App
+tags:
+  - name: Rewards Query
+    description: View methods for querying reward state and amounts
+  - name: Rewards Claims
+    description: Write methods for claiming earned rewards
+  - name: Reward Configuration
+    description: Reward program configuration and indexes
+paths:
+  /rewards/allRewards:
+    get:
+      summary: Get all reward tokens
+      description: Returns an array of all ERC-20 reward tokens registered in the RewardsController.
+      operationId: allRewards
+      tags:
+        - Rewards Query
+      responses:
+        "200":
+          description: Array of reward token addresses
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  rewards:
+                    type: array
+                    description: Addresses of all reward tokens (e.g., EXA, esEXA)
+                    items:
+                      type: string
+                      pattern: "^0x[a-fA-F0-9]{40}$"
+  /rewards/allMarketsOperations:
+    get:
+      summary: Get all market operations eligible for rewards
+      description: Returns all market-operation pairs (deposit/borrow) registered for reward distribution.
+      operationId: allMarketsOperations
+      tags:
+        - Rewards Query
+      responses:
+        "200":
+          description: Array of MarketOperation structs
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  marketOperations:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/MarketOperation"
+  /rewards/allClaimable:
+    post:
+      summary: Get total claimable reward amount for an account
+      description: >
+        Returns the total amount of a specific reward token claimable by an account
+        across all markets and operations.
+      operationId: allClaimable
+      tags:
+        - Rewards Query
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - account
+                - reward
+              properties:
+                account:
+                  type: string
+                  description: Address of the account to check
+                  pattern: "^0x[a-fA-F0-9]{40}$"
+                reward:
+                  type: string
+                  description: Address of the reward token (e.g., EXA)
+                  pattern: "^0x[a-fA-F0-9]{40}$"
+      responses:
+        "200":
+          description: Total claimable reward amount
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  claimable:
+                    type: string
+                    description: Total claimable amount in reward token units (in wei)
+  /rewards/claimable:
+    post:
+      summary: Get claimable rewards for specific market operations
+      description: >
+        Returns the claimable amount of a specific reward token for an account
+        across a specified list of market operations.
+      operationId: claimable
+      tags:
+        - Rewards Query
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - marketOps
+                - account
+                - reward
+              properties:
+                marketOps:
+                  type: array
+                  description: List of market-operation pairs to include
+                  items:
+                    $ref: "#/components/schemas/MarketOperation"
+                account:
+                  type: string
+                  description: Address of the account to check
+                  pattern: "^0x[a-fA-F0-9]{40}$"
+                reward:
+                  type: string
+                  description: Address of the reward token
+                  pattern: "^0x[a-fA-F0-9]{40}$"
+      responses:
+        "200":
+          description: Claimable reward amount
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  claimable:
+                    type: string
+                    description: Claimable amount for the specified operations (in wei)
+  /rewards/rewardConfig:
+    post:
+      summary: Get reward distribution configuration
+      description: >
+        Returns the full reward distribution configuration for a specific market
+        and reward token pair, including distribution speed and target parameters.
+      operationId: rewardConfig
+      tags:
+        - Reward Configuration
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - market
+                - reward
+              properties:
+                market:
+                  type: string
+                  description: Address of the Market contract
+                  pattern: "^0x[a-fA-F0-9]{40}$"
+                reward:
+                  type: string
+                  description: Address of the reward token
+                  pattern: "^0x[a-fA-F0-9]{40}$"
+      responses:
+        "200":
+          description: Reward configuration
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RewardConfig"
+  /rewards/distributionTime:
+    post:
+      summary: Get reward distribution timeline
+      description: >
+        Returns the start time, end time, and last update time for a reward
+        distribution program on a specific market.
+      operationId: distributionTime
+      tags:
+        - Reward Configuration
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - market
+                - reward
+              properties:
+                market:
+                  type: string
+                  description: Address of the Market contract
+                  pattern: "^0x[a-fA-F0-9]{40}$"
+                reward:
+                  type: string
+                  description: Address of the reward token
+                  pattern: "^0x[a-fA-F0-9]{40}$"
+      responses:
+        "200":
+          description: Distribution timeline
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  start:
+                    type: integer
+                    description: Unix timestamp when the distribution started
+                  end:
+                    type: integer
+                    description: Unix timestamp when the distribution ends
+                  lastUpdate:
+                    type: integer
+                    description: Unix timestamp of the last reward index update
+  /rewards/rewardIndexes:
+    post:
+      summary: Get current reward indexes
+      description: >
+        Returns the current deposit reward index, borrow reward index, and
+        last update time for a market-reward pair.
+      operationId: rewardIndexes
+      tags:
+        - Reward Configuration
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - market
+                - reward
+              properties:
+                market:
+                  type: string
+                  description: Address of the Market contract
+                  pattern: "^0x[a-fA-F0-9]{40}$"
+                reward:
+                  type: string
+                  description: Address of the reward token
+                  pattern: "^0x[a-fA-F0-9]{40}$"
+      responses:
+        "200":
+          description: Current reward indexes
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  borrowIndex:
+                    type: string
+                    description: Current global borrow reward index
+                  depositIndex:
+                    type: string
+                    description: Current global deposit reward index
+                  lastUpdate:
+                    type: integer
+                    description: Unix timestamp of the last index update
+  /rewards/previewAllocation:
+    post:
+      summary: Preview reward allocation for a time period
+      description: >
+        Returns projected deposit and borrow reward allocations and utilization
+        for a specified time delta, useful for estimating rewards APR.
+      operationId: previewAllocation
+      tags:
+        - Rewards Query
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - market
+                - reward
+                - deltaTime
+              properties:
+                market:
+                  type: string
+                  description: Address of the Market contract
+                  pattern: "^0x[a-fA-F0-9]{40}$"
+                reward:
+                  type: string
+                  description: Address of the reward token
+                  pattern: "^0x[a-fA-F0-9]{40}$"
+                deltaTime:
+                  type: string
+                  description: Time period in seconds to project rewards over
+      responses:
+        "200":
+          description: Projected allocation amounts
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  depositRewards:
+                    type: string
+                    description: Projected rewards allocated to depositors (in wei)
+                  borrowRewards:
+                    type: string
+                    description: Projected rewards allocated to borrowers (in wei)
+                  utilization:
+                    type: string
+                    description: Utilization rate used for reward split (scaled by 1e18)
+  /rewards/claim:
+    post:
+      summary: Claim rewards for specific market operations
+      description: >
+        Claims earned rewards for a list of market-operation pairs and sends
+        the specified reward tokens to the designated address.
+      operationId: claim
+      tags:
+        - Rewards Claims
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - marketOps
+                - to
+                - rewardsList
+              properties:
+                marketOps:
+                  type: array
+                  description: Market-operation pairs to claim rewards for
+                  items:
+                    $ref: "#/components/schemas/MarketOperation"
+                to:
+                  type: string
+                  description: Address to send claimed rewards to
+                  pattern: "^0x[a-fA-F0-9]{40}$"
+                rewardsList:
+                  type: array
+                  description: List of reward token addresses to claim
+                  items:
+                    type: string
+                    pattern: "^0x[a-fA-F0-9]{40}$"
+      responses:
+        "200":
+          description: Claimed rewards summary
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClaimResult"
+  /rewards/claimAll:
+    post:
+      summary: Claim all rewards for the caller
+      description: >
+        Claims all earned rewards across all markets and all reward tokens,
+        sending them to the specified address.
+      operationId: claimAll
+      tags:
+        - Rewards Claims
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - to
+              properties:
+                to:
+                  type: string
+                  description: Address to send all claimed rewards to
+                  pattern: "^0x[a-fA-F0-9]{40}$"
+      responses:
+        "200":
+          description: All claimed rewards summary
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClaimResult"
+components:
+  schemas:
+    MarketOperation:
+      type: object
+      description: A market and operation type pair for reward queries/claims
+      required:
+        - market
+        - operations
+      properties:
+        market:
+          type: string
+          description: Address of the Market contract
+          pattern: "^0x[a-fA-F0-9]{40}$"
+        operations:
+          type: array
+          description: Operation types (true = borrow, false = deposit)
+          items:
+            type: boolean
+    RewardConfig:
+      type: object
+      description: Full reward distribution configuration for a market-reward pair
+      properties:
+        market:
+          type: string
+          description: Market contract address
+          pattern: "^0x[a-fA-F0-9]{40}$"
+        reward:
+          type: string
+          description: Reward token address
+          pattern: "^0x[a-fA-F0-9]{40}$"
+        priceFeed:
+          type: string
+          description: Price feed address for the reward token
+          pattern: "^0x[a-fA-F0-9]{40}$"
+        start:
+          type: integer
+          description: Distribution start timestamp
+        distributionPeriod:
+          type: integer
+          description: Duration of the distribution period in seconds
+        targetDebt:
+          type: string
+          description: Target total debt to optimize distribution around
+        totalDistribution:
+          type: string
+          description: Total reward tokens to distribute over the period (in wei)
+        undistributedFactor:
+          type: string
+          description: Factor for undistributed rewards (scaled by 1e18)
+        flipSpeed:
+          type: string
+          description: Speed at which deposit/borrow split adjusts
+        compensationFactor:
+          type: string
+          description: Compensation factor for the reward split
+        transitionFactor:
+          type: string
+          description: Factor controlling the transition between deposit and borrow rewards
+        borrowAllocationWeightFactor:
+          type: string
+          description: Weight factor for borrow allocation
+        depositAllocationWeightAddend:
+          type: string
+          description: Addend for deposit allocation weight
+        depositAllocationWeightFactor:
+          type: string
+          description: Weight factor for deposit allocation
+    ClaimResult:
+      type: object
+      description: Result of a reward claim operation
+      properties:
+        rewardsList:
+          type: array
+          description: List of reward token addresses that were claimed
+          items:
+            type: string
+            pattern: "^0x[a-fA-F0-9]{40}$"
+        claimedAmounts:
+          type: array
+          description: Amounts of each reward token claimed (in wei, parallel array to rewardsList)
+          items:
+            type: string

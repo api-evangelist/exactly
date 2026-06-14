@@ -1,0 +1,31 @@
+{
+  "title": "Claim All Rewards",
+  "description": "Example request and response for claiming all earned EXA and esEXA rewards across all markets using the Exactly Protocol RewardsController's claimAll() method.",
+  "request": {
+    "method": "POST",
+    "path": "/rewards/claimAll",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "to": "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
+    }
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "rewardsList": [
+        "0x1e925De1c68ef83bD98eE3E130EF14a50309C01",
+        "0xB72b394b4dF4Be7E609e7BD8Af29F59d3D38B1F"
+      ],
+      "claimedAmounts": [
+        "4523000000000000000",
+        "1250000000000000000"
+      ]
+    }
+  },
+  "notes": "The first reward token (0x1e925D...) is EXA, of which 4.523 EXA was claimed. The second (0xB72b39...) is esEXA (escrowed EXA), of which 1.25 esEXA was claimed. Both are 18-decimal tokens. Reward addresses shown are illustrative for Optimism network. The 'to' address receives all claimed tokens."
+}

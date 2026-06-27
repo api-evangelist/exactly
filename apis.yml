@@ -201,7 +201,7 @@ common:
   url: https://docs.exact.ly/security/audits
 - type: SmartContracts
   url: https://docs.exact.ly/guides/smart-contract-addresses.md
-- type: Finops
+- type: FinOps
   url: https://raw.githubusercontent.com/api-evangelist/exactly/refs/heads/main/finops/finops.yml
 maintainers:
 - FN: Kin Lane

@@ -1,0 +1,21 @@
+{
+  "repo": "exactly",
+  "feeds": [
+    {
+      "source": "https://medium.com/feed/@exactly_protocol",
+      "feed_url": "https://medium.com/feed/@exactly_protocol",
+      "title": "",
+      "saved": 0,
+      "method": "feed"
+    },
+    {
+      "source": "https://raw.githubusercontent.com/api-evangelist/exactly/refs/heads/main/finops/finops.yml",
+      "feed_url": "https://raw.githubusercontent.com/api-evangelist/exactly/refs/heads/main/finops/finops.yml",
+      "title": "",
+      "saved": 0,
+      "method": "none"
+    }
+  ],
+  "fetched": "2026-07-11T11:50:51Z",
+  "post_count": 11
+}

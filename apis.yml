@@ -171,6 +171,8 @@ apis:
     url: https://docs.exact.ly
     email: ''
 common:
+- type: AgenticAccess
+  url: agentic-access/exactly-agentic-access.yml
 - type: DomainSecurity
   url: security/exactly-domain-security.yml
 - type: Website

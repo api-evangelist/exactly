@@ -1,0 +1,68 @@
+openapi: 3.1.0
+info:
+  title: Exactly Protocol Auditor ERC-4626 Liquidity API
+  description: 'Smart contract interface for the Auditor, the central risk management component of Exactly Protocol. Manages market listings, collateral factors, account liquidity checks, and liquidation eligibility. Provides methods to query all markets, compute account liquidity, calculate seizure amounts, and check liquidation conditions. Deployed on Ethereum, Optimism, and Base.
+
+    '
+  version: 1.0.0
+  contact:
+    name: Exactly Protocol
+    url: https://docs.exact.ly
+  license:
+    name: MIT
+    url: https://github.com/exactly/protocol/blob/main/LICENSE-MIT
+servers:
+- url: https://app.exact.ly
+  description: Exactly Protocol App
+tags:
+- name: Liquidity
+  description: Account liquidity and collateral checks
+paths:
+  /auditor/accountLiquidity:
+    post:
+      summary: Compute account liquidity
+      description: 'Computes the total collateral value and total debt (plus effects of a simulated withdrawal) for an account across all enabled markets. Used to determine if an account is solvent or eligible for liquidation.
+
+        '
+      operationId: accountLiquidity
+      tags:
+      - Liquidity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - account
+              - marketToSimulate
+              - withdrawAmount
+              properties:
+                account:
+                  type: string
+                  description: Address of the account to evaluate
+                  pattern: ^0x[a-fA-F0-9]{40}$
+                marketToSimulate:
+                  type: string
+                  description: Market to simulate a withdrawal from (use zero address for none)
+                  pattern: ^0x[a-fA-F0-9]{40}$
+                withdrawAmount:
+                  type: string
+                  description: Amount to simulate withdrawing (in wei, use 0 for no simulation)
+      responses:
+        '200':
+          description: Account liquidity totals
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  sumCollateral:
+                    type: string
+                    description: Total collateral value in base currency units
+                  sumDebtPlusEffects:
+                    type: string
+                    description: Total debt plus simulated withdrawal effects in base currency units
+externalDocs:
+  description: Exactly Protocol Auditor Documentation
+  url: https://docs.exact.ly/guides/protocol/auditor.md

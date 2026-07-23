@@ -1,0 +1,211 @@
+openapi: 3.1.0
+info:
+  title: Exactly Protocol Auditor ERC-4626 Rewards Query API
+  description: 'Smart contract interface for the Auditor, the central risk management component of Exactly Protocol. Manages market listings, collateral factors, account liquidity checks, and liquidation eligibility. Provides methods to query all markets, compute account liquidity, calculate seizure amounts, and check liquidation conditions. Deployed on Ethereum, Optimism, and Base.
+
+    '
+  version: 1.0.0
+  contact:
+    name: Exactly Protocol
+    url: https://docs.exact.ly
+  license:
+    name: MIT
+    url: https://github.com/exactly/protocol/blob/main/LICENSE-MIT
+servers:
+- url: https://app.exact.ly
+  description: Exactly Protocol App
+tags:
+- name: Rewards Query
+  description: View methods for querying reward state and amounts
+paths:
+  /rewards/allRewards:
+    get:
+      summary: Get all reward tokens
+      description: Returns an array of all ERC-20 reward tokens registered in the RewardsController.
+      operationId: allRewards
+      tags:
+      - Rewards Query
+      responses:
+        '200':
+          description: Array of reward token addresses
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  rewards:
+                    type: array
+                    description: Addresses of all reward tokens (e.g., EXA, esEXA)
+                    items:
+                      type: string
+                      pattern: ^0x[a-fA-F0-9]{40}$
+  /rewards/allMarketsOperations:
+    get:
+      summary: Get all market operations eligible for rewards
+      description: Returns all market-operation pairs (deposit/borrow) registered for reward distribution.
+      operationId: allMarketsOperations
+      tags:
+      - Rewards Query
+      responses:
+        '200':
+          description: Array of MarketOperation structs
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  marketOperations:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/MarketOperation'
+  /rewards/allClaimable:
+    post:
+      summary: Get total claimable reward amount for an account
+      description: 'Returns the total amount of a specific reward token claimable by an account across all markets and operations.
+
+        '
+      operationId: allClaimable
+      tags:
+      - Rewards Query
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - account
+              - reward
+              properties:
+                account:
+                  type: string
+                  description: Address of the account to check
+                  pattern: ^0x[a-fA-F0-9]{40}$
+                reward:
+                  type: string
+                  description: Address of the reward token (e.g., EXA)
+                  pattern: ^0x[a-fA-F0-9]{40}$
+      responses:
+        '200':
+          description: Total claimable reward amount
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  claimable:
+                    type: string
+                    description: Total claimable amount in reward token units (in wei)
+  /rewards/claimable:
+    post:
+      summary: Get claimable rewards for specific market operations
+      description: 'Returns the claimable amount of a specific reward token for an account across a specified list of market operations.
+
+        '
+      operationId: claimable
+      tags:
+      - Rewards Query
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - marketOps
+              - account
+              - reward
+              properties:
+                marketOps:
+                  type: array
+                  description: List of market-operation pairs to include
+                  items:
+                    $ref: '#/components/schemas/MarketOperation'
+                account:
+                  type: string
+                  description: Address of the account to check
+                  pattern: ^0x[a-fA-F0-9]{40}$
+                reward:
+                  type: string
+                  description: Address of the reward token
+                  pattern: ^0x[a-fA-F0-9]{40}$
+      responses:
+        '200':
+          description: Claimable reward amount
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  claimable:
+                    type: string
+                    description: Claimable amount for the specified operations (in wei)
+  /rewards/previewAllocation:
+    post:
+      summary: Preview reward allocation for a time period
+      description: 'Returns projected deposit and borrow reward allocations and utilization for a specified time delta, useful for estimating rewards APR.
+
+        '
+      operationId: previewAllocation
+      tags:
+      - Rewards Query
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - market
+              - reward
+              - deltaTime
+              properties:
+                market:
+                  type: string
+                  description: Address of the Market contract
+                  pattern: ^0x[a-fA-F0-9]{40}$
+                reward:
+                  type: string
+                  description: Address of the reward token
+                  pattern: ^0x[a-fA-F0-9]{40}$
+                deltaTime:
+                  type: string
+                  description: Time period in seconds to project rewards over
+      responses:
+        '200':
+          description: Projected allocation amounts
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  depositRewards:
+                    type: string
+                    description: Projected rewards allocated to depositors (in wei)
+                  borrowRewards:
+                    type: string
+                    description: Projected rewards allocated to borrowers (in wei)
+                  utilization:
+                    type: string
+                    description: Utilization rate used for reward split (scaled by 1e18)
+components:
+  schemas:
+    MarketOperation:
+      type: object
+      description: A market and operation type pair for reward queries/claims
+      required:
+      - market
+      - operations
+      properties:
+        market:
+          type: string
+          description: Address of the Market contract
+          pattern: ^0x[a-fA-F0-9]{40}$
+        operations:
+          type: array
+          description: Operation types (true = borrow, false = deposit)
+          items:
+            type: boolean
+externalDocs:
+  description: Exactly Protocol Auditor Documentation
+  url: https://docs.exact.ly/guides/protocol/auditor.md

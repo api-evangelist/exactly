@@ -1,0 +1,213 @@
+openapi: 3.1.0
+info:
+  title: Exactly Protocol Auditor ERC-4626 Fixed Rate API
+  description: 'Smart contract interface for the Auditor, the central risk management component of Exactly Protocol. Manages market listings, collateral factors, account liquidity checks, and liquidation eligibility. Provides methods to query all markets, compute account liquidity, calculate seizure amounts, and check liquidation conditions. Deployed on Ethereum, Optimism, and Base.
+
+    '
+  version: 1.0.0
+  contact:
+    name: Exactly Protocol
+    url: https://docs.exact.ly
+  license:
+    name: MIT
+    url: https://github.com/exactly/protocol/blob/main/LICENSE-MIT
+servers:
+- url: https://app.exact.ly
+  description: Exactly Protocol App
+tags:
+- name: Fixed Rate
+  description: Fixed rate maturity pool operations
+paths:
+  /market/depositAtMaturity:
+    post:
+      summary: Deposit assets at a fixed rate maturity pool
+      description: 'Deposits assets into a specific maturity pool to earn a fixed rate of return. The minAssetsRequired parameter protects against slippage.
+
+        '
+      operationId: depositAtMaturity
+      tags:
+      - Fixed Rate
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - maturity
+              - assets
+              - minAssetsRequired
+              - receiver
+              properties:
+                maturity:
+                  type: integer
+                  description: Unix timestamp of the maturity pool
+                assets:
+                  type: string
+                  description: Amount to deposit (in wei)
+                minAssetsRequired:
+                  type: string
+                  description: Minimum position assets required (slippage protection, in wei)
+                receiver:
+                  type: string
+                  description: Address to receive the fixed deposit position
+                  pattern: ^0x[a-fA-F0-9]{40}$
+      responses:
+        '200':
+          description: Position assets received
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  positionAssets:
+                    type: string
+                    description: Total position (principal + fee) at maturity (in wei)
+  /market/withdrawAtMaturity:
+    post:
+      summary: Withdraw assets from a fixed rate maturity pool
+      description: 'Withdraws a fixed deposit position before or at maturity. Early withdrawal incurs a discount; at or after maturity no discount applies.
+
+        '
+      operationId: withdrawAtMaturity
+      tags:
+      - Fixed Rate
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - maturity
+              - positionAssets
+              - minAssetsRequired
+              - receiver
+              - owner
+              properties:
+                maturity:
+                  type: integer
+                  description: Unix timestamp of the maturity pool
+                positionAssets:
+                  type: string
+                  description: Amount of position assets to withdraw (in wei)
+                minAssetsRequired:
+                  type: string
+                  description: Minimum assets to receive (slippage protection, in wei)
+                receiver:
+                  type: string
+                  description: Address to receive withdrawn assets
+                  pattern: ^0x[a-fA-F0-9]{40}$
+                owner:
+                  type: string
+                  description: Address of the position owner
+                  pattern: ^0x[a-fA-F0-9]{40}$
+      responses:
+        '200':
+          description: Discounted assets received
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  assetsDiscounted:
+                    type: string
+                    description: Actual assets received after discount (in wei)
+  /market/borrowAtMaturity:
+    post:
+      summary: Borrow assets at a fixed rate maturity pool
+      description: 'Borrows assets from a specific maturity pool at a fixed interest rate. The maxAssets parameter limits slippage on the borrow fee.
+
+        '
+      operationId: borrowAtMaturity
+      tags:
+      - Fixed Rate
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - maturity
+              - assets
+              - maxAssets
+              - receiver
+              - borrower
+              properties:
+                maturity:
+                  type: integer
+                  description: Unix timestamp of the maturity pool
+                assets:
+                  type: string
+                  description: Amount to borrow (in wei)
+                maxAssets:
+                  type: string
+                  description: Maximum total owed allowed (slippage protection, in wei)
+                receiver:
+                  type: string
+                  description: Address to receive the borrowed assets
+                  pattern: ^0x[a-fA-F0-9]{40}$
+                borrower:
+                  type: string
+                  description: Address whose collateral backs the borrow
+                  pattern: ^0x[a-fA-F0-9]{40}$
+      responses:
+        '200':
+          description: Total assets owed at maturity
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  assetsOwed:
+                    type: string
+                    description: Total assets owed at maturity (principal + fee, in wei)
+  /market/repayAtMaturity:
+    post:
+      summary: Repay a fixed rate borrow at maturity
+      description: 'Repays a fixed-rate borrow position at or before its maturity date. Early repayment may qualify for a discount.
+
+        '
+      operationId: repayAtMaturity
+      tags:
+      - Fixed Rate
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - maturity
+              - positionAssets
+              - maxAssets
+              - borrower
+              properties:
+                maturity:
+                  type: integer
+                  description: Unix timestamp of the maturity pool
+                positionAssets:
+                  type: string
+                  description: Position debt to repay (in wei)
+                maxAssets:
+                  type: string
+                  description: Maximum assets allowed to spend (slippage protection, in wei)
+                borrower:
+                  type: string
+                  description: Address of the borrower
+                  pattern: ^0x[a-fA-F0-9]{40}$
+      responses:
+        '200':
+          description: Actual repaid assets
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  actualRepayAssets:
+                    type: string
+                    description: Actual assets used for repayment (in wei)
+externalDocs:
+  description: Exactly Protocol Auditor Documentation
+  url: https://docs.exact.ly/guides/protocol/auditor.md

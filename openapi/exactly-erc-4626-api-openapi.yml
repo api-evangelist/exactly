@@ -1,0 +1,186 @@
+openapi: 3.1.0
+info:
+  title: Exactly Protocol Auditor ERC-4626 API
+  description: 'Smart contract interface for the Auditor, the central risk management component of Exactly Protocol. Manages market listings, collateral factors, account liquidity checks, and liquidation eligibility. Provides methods to query all markets, compute account liquidity, calculate seizure amounts, and check liquidation conditions. Deployed on Ethereum, Optimism, and Base.
+
+    '
+  version: 1.0.0
+  contact:
+    name: Exactly Protocol
+    url: https://docs.exact.ly
+  license:
+    name: MIT
+    url: https://github.com/exactly/protocol/blob/main/LICENSE-MIT
+servers:
+- url: https://app.exact.ly
+  description: Exactly Protocol App
+tags:
+- name: ERC-4626
+  description: ERC-4626 vault standard methods
+paths:
+  /market/totalAssets:
+    get:
+      summary: Get total assets
+      description: Returns total assets managed by the market vault (ERC-4626).
+      operationId: totalAssets
+      tags:
+      - ERC-4626
+      responses:
+        '200':
+          description: Total managed assets
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  totalAssets:
+                    type: string
+                    description: Total assets in underlying token units (in wei)
+  /market/convertToAssets:
+    post:
+      summary: Convert shares to assets
+      description: Returns the amount of underlying assets equivalent to the given number of shares.
+      operationId: convertToAssets
+      tags:
+      - ERC-4626
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - shares
+              properties:
+                shares:
+                  type: string
+                  description: Number of shares to convert
+      responses:
+        '200':
+          description: Equivalent asset amount
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  assets:
+                    type: string
+                    description: Equivalent assets (in wei)
+  /market/convertToShares:
+    post:
+      summary: Convert assets to shares
+      description: Returns the number of shares equivalent to the given amount of underlying assets.
+      operationId: convertToShares
+      tags:
+      - ERC-4626
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - assets
+              properties:
+                assets:
+                  type: string
+                  description: Amount of assets to convert (in wei)
+      responses:
+        '200':
+          description: Equivalent share amount
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  shares:
+                    type: string
+                    description: Equivalent shares
+  /market/deposit:
+    post:
+      summary: Deposit assets at variable rate
+      description: 'Deposits underlying assets into the floating pool and mints ERC-4626 shares to the receiver. Returns the number of shares minted.
+
+        '
+      operationId: deposit
+      tags:
+      - ERC-4626
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DepositRequest'
+      responses:
+        '200':
+          description: Shares minted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  shares:
+                    type: string
+                    description: Number of shares minted to receiver
+  /market/withdraw:
+    post:
+      summary: Withdraw assets at variable rate
+      description: 'Withdraws a specific amount of underlying assets from the floating pool, burning the required shares from the owner''s balance.
+
+        '
+      operationId: withdraw
+      tags:
+      - ERC-4626
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WithdrawRequest'
+      responses:
+        '200':
+          description: Shares burned
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  shares:
+                    type: string
+                    description: Number of shares burned
+components:
+  schemas:
+    WithdrawRequest:
+      type: object
+      required:
+      - assets
+      - receiver
+      - owner
+      properties:
+        assets:
+          type: string
+          description: Amount of underlying assets to withdraw (in wei)
+        receiver:
+          type: string
+          description: Address to receive the withdrawn assets
+          pattern: ^0x[a-fA-F0-9]{40}$
+        owner:
+          type: string
+          description: Address of the shares owner
+          pattern: ^0x[a-fA-F0-9]{40}$
+    DepositRequest:
+      type: object
+      required:
+      - assets
+      - receiver
+      properties:
+        assets:
+          type: string
+          description: Amount of underlying assets to deposit (in wei)
+        receiver:
+          type: string
+          description: Address to receive the minted shares
+          pattern: ^0x[a-fA-F0-9]{40}$
+externalDocs:
+  description: Exactly Protocol Auditor Documentation
+  url: https://docs.exact.ly/guides/protocol/auditor.md

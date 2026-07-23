@@ -1,38 +1,32 @@
 openapi: 3.1.0
 info:
-  title: Exactly Protocol Previewer API
-  description: >
-    Read-only smart contract interface for previewing deposits, borrows, withdrawals,
-    and repayments across all market maturity pools on Exactly Protocol. Returns
-    projected yields, repayment amounts, and comprehensive account positions across
-    all markets on Ethereum and Optimism without executing any transactions.
-  version: "1.0.0"
+  title: Exactly Protocol Auditor ERC-4626 Previewer API
+  description: 'Smart contract interface for the Auditor, the central risk management component of Exactly Protocol. Manages market listings, collateral factors, account liquidity checks, and liquidation eligibility. Provides methods to query all markets, compute account liquidity, calculate seizure amounts, and check liquidation conditions. Deployed on Ethereum, Optimism, and Base.
+
+    '
+  version: 1.0.0
   contact:
     name: Exactly Protocol
     url: https://docs.exact.ly
   license:
     name: MIT
     url: https://github.com/exactly/protocol/blob/main/LICENSE-MIT
-externalDocs:
-  description: Exactly Protocol Previewer Documentation
-  url: https://docs.exact.ly/guides/periphery-contracts/previewer-read-only.md
 servers:
-  - url: https://app.exact.ly
-    description: Exactly Protocol App
+- url: https://app.exact.ly
+  description: Exactly Protocol App
 tags:
-  - name: Previewer
-    description: Read-only preview methods for Exactly Protocol markets
+- name: Previewer
+  description: Read-only preview methods for Exactly Protocol markets
 paths:
   /previewer/exactly:
     post:
       summary: Get all market accounts for an address
-      description: >
-        Returns a comprehensive snapshot of all markets and the given account's
-        positions across all of them, including floating and fixed deposit/borrow
-        balances, APRs, and pool information.
+      description: 'Returns a comprehensive snapshot of all markets and the given account''s positions across all of them, including floating and fixed deposit/borrow balances, APRs, and pool information.
+
+        '
       operationId: exactly
       tags:
-        - Previewer
+      - Previewer
       requestBody:
         required: true
         content:
@@ -40,31 +34,31 @@ paths:
             schema:
               type: object
               required:
-                - account
+              - account
               properties:
                 account:
                   type: string
                   description: Ethereum address to retrieve market account data for
-                  pattern: "^0x[a-fA-F0-9]{40}$"
-                  example: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
+                  pattern: ^0x[a-fA-F0-9]{40}$
+                  example: '0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045'
       responses:
-        "200":
+        '200':
           description: Array of MarketAccount structs for the given account
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/MarketAccount"
+                  $ref: '#/components/schemas/MarketAccount'
   /previewer/previewDepositAtMaturity:
     post:
       summary: Preview a fixed-rate deposit at a specific maturity
-      description: >
-        Returns the projected fixed-rate yield (positionAssets) for a given
-        deposit amount at the specified market and maturity timestamp.
+      description: 'Returns the projected fixed-rate yield (positionAssets) for a given deposit amount at the specified market and maturity timestamp.
+
+        '
       operationId: previewDepositAtMaturity
       tags:
-        - Previewer
+      - Previewer
       requestBody:
         required: true
         content:
@@ -72,14 +66,14 @@ paths:
             schema:
               type: object
               required:
-                - market
-                - maturity
-                - assets
+              - market
+              - maturity
+              - assets
               properties:
                 market:
                   type: string
                   description: Address of the Market contract
-                  pattern: "^0x[a-fA-F0-9]{40}$"
+                  pattern: ^0x[a-fA-F0-9]{40}$
                 maturity:
                   type: integer
                   description: Unix timestamp of the maturity pool
@@ -87,21 +81,21 @@ paths:
                   type: string
                   description: Amount of assets to deposit (in wei)
       responses:
-        "200":
+        '200':
           description: Fixed preview result
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/FixedPreview"
+                $ref: '#/components/schemas/FixedPreview'
   /previewer/previewDepositAtAllMaturities:
     post:
       summary: Preview a fixed-rate deposit at all active maturities
-      description: >
-        Returns projected yields for a given deposit amount across all active
-        maturity pools in the specified market.
+      description: 'Returns projected yields for a given deposit amount across all active maturity pools in the specified market.
+
+        '
       operationId: previewDepositAtAllMaturities
       tags:
-        - Previewer
+      - Previewer
       requestBody:
         required: true
         content:
@@ -109,34 +103,34 @@ paths:
             schema:
               type: object
               required:
-                - market
-                - assets
+              - market
+              - assets
               properties:
                 market:
                   type: string
                   description: Address of the Market contract
-                  pattern: "^0x[a-fA-F0-9]{40}$"
+                  pattern: ^0x[a-fA-F0-9]{40}$
                 assets:
                   type: string
                   description: Amount of assets to deposit (in wei)
       responses:
-        "200":
+        '200':
           description: Array of fixed preview results for each maturity
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/FixedPreview"
+                  $ref: '#/components/schemas/FixedPreview'
   /previewer/previewBorrowAtMaturity:
     post:
       summary: Preview a fixed-rate borrow at a specific maturity
-      description: >
-        Returns the projected total repayment amount (positionAssets) for
-        borrowing the specified assets at a fixed rate from the given maturity pool.
+      description: 'Returns the projected total repayment amount (positionAssets) for borrowing the specified assets at a fixed rate from the given maturity pool.
+
+        '
       operationId: previewBorrowAtMaturity
       tags:
-        - Previewer
+      - Previewer
       requestBody:
         required: true
         content:
@@ -144,14 +138,14 @@ paths:
             schema:
               type: object
               required:
-                - market
-                - maturity
-                - assets
+              - market
+              - maturity
+              - assets
               properties:
                 market:
                   type: string
                   description: Address of the Market contract
-                  pattern: "^0x[a-fA-F0-9]{40}$"
+                  pattern: ^0x[a-fA-F0-9]{40}$
                 maturity:
                   type: integer
                   description: Unix timestamp of the maturity pool
@@ -159,21 +153,21 @@ paths:
                   type: string
                   description: Amount of assets to borrow (in wei)
       responses:
-        "200":
+        '200':
           description: Fixed preview result
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/FixedPreview"
+                $ref: '#/components/schemas/FixedPreview'
   /previewer/previewBorrowAtAllMaturities:
     post:
       summary: Preview a fixed-rate borrow at all active maturities
-      description: >
-        Returns projected repayment amounts for borrowing the given assets across
-        all active maturity pools in the specified market.
+      description: 'Returns projected repayment amounts for borrowing the given assets across all active maturity pools in the specified market.
+
+        '
       operationId: previewBorrowAtAllMaturities
       tags:
-        - Previewer
+      - Previewer
       requestBody:
         required: true
         content:
@@ -181,34 +175,34 @@ paths:
             schema:
               type: object
               required:
-                - market
-                - assets
+              - market
+              - assets
               properties:
                 market:
                   type: string
                   description: Address of the Market contract
-                  pattern: "^0x[a-fA-F0-9]{40}$"
+                  pattern: ^0x[a-fA-F0-9]{40}$
                 assets:
                   type: string
                   description: Amount of assets to borrow (in wei)
       responses:
-        "200":
+        '200':
           description: Array of fixed preview results for each maturity
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/FixedPreview"
+                  $ref: '#/components/schemas/FixedPreview'
   /previewer/previewRepayAtMaturity:
     post:
       summary: Preview repayment of a fixed-rate borrow at maturity
-      description: >
-        Returns the actual assets needed to repay a fixed borrow position
-        at the given maturity, accounting for early repayment discounts.
+      description: 'Returns the actual assets needed to repay a fixed borrow position at the given maturity, accounting for early repayment discounts.
+
+        '
       operationId: previewRepayAtMaturity
       tags:
-        - Previewer
+      - Previewer
       requestBody:
         required: true
         content:
@@ -216,15 +210,15 @@ paths:
             schema:
               type: object
               required:
-                - market
-                - maturity
-                - positionAssets
-                - borrower
+              - market
+              - maturity
+              - positionAssets
+              - borrower
               properties:
                 market:
                   type: string
                   description: Address of the Market contract
-                  pattern: "^0x[a-fA-F0-9]{40}$"
+                  pattern: ^0x[a-fA-F0-9]{40}$
                 maturity:
                   type: integer
                   description: Unix timestamp of the maturity pool
@@ -234,23 +228,23 @@ paths:
                 borrower:
                   type: string
                   description: Address of the borrower
-                  pattern: "^0x[a-fA-F0-9]{40}$"
+                  pattern: ^0x[a-fA-F0-9]{40}$
       responses:
-        "200":
+        '200':
           description: Fixed preview result
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/FixedPreview"
+                $ref: '#/components/schemas/FixedPreview'
   /previewer/previewWithdrawAtMaturity:
     post:
       summary: Preview withdrawal of a fixed-rate deposit at maturity
-      description: >
-        Returns the actual assets received when withdrawing a fixed deposit
-        position before maturity, accounting for early withdrawal discounts.
+      description: 'Returns the actual assets received when withdrawing a fixed deposit position before maturity, accounting for early withdrawal discounts.
+
+        '
       operationId: previewWithdrawAtMaturity
       tags:
-        - Previewer
+      - Previewer
       requestBody:
         required: true
         content:
@@ -258,15 +252,15 @@ paths:
             schema:
               type: object
               required:
-                - market
-                - maturity
-                - positionAssets
-                - owner
+              - market
+              - maturity
+              - positionAssets
+              - owner
               properties:
                 market:
                   type: string
                   description: Address of the Market contract
-                  pattern: "^0x[a-fA-F0-9]{40}$"
+                  pattern: ^0x[a-fA-F0-9]{40}$
                 maturity:
                   type: integer
                   description: Unix timestamp of the maturity pool
@@ -276,14 +270,14 @@ paths:
                 owner:
                   type: string
                   description: Address of the position owner
-                  pattern: "^0x[a-fA-F0-9]{40}$"
+                  pattern: ^0x[a-fA-F0-9]{40}$
       responses:
-        "200":
+        '200':
           description: Fixed preview result
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/FixedPreview"
+                $ref: '#/components/schemas/FixedPreview'
 components:
   schemas:
     FixedPreview:
@@ -306,7 +300,7 @@ components:
         market:
           type: string
           description: Address of the Market contract
-          pattern: "^0x[a-fA-F0-9]{40}$"
+          pattern: ^0x[a-fA-F0-9]{40}$
         symbol:
           type: string
           description: ERC-20 symbol of the market asset
@@ -329,7 +323,7 @@ components:
           type: array
           description: Array of active maturity pool summaries
           items:
-            $ref: "#/components/schemas/FixedPool"
+            $ref: '#/components/schemas/FixedPool'
         floatingBorrowRate:
           type: string
           description: Current variable borrow APR (scaled by 1e18)
@@ -379,3 +373,6 @@ components:
         optimalDeposit:
           type: string
           description: Optimal deposit amount to maximize yield
+externalDocs:
+  description: Exactly Protocol Auditor Documentation
+  url: https://docs.exact.ly/guides/protocol/auditor.md

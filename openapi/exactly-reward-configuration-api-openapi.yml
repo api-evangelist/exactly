@@ -1,0 +1,196 @@
+openapi: 3.1.0
+info:
+  title: Exactly Protocol Auditor ERC-4626 Reward Configuration API
+  description: 'Smart contract interface for the Auditor, the central risk management component of Exactly Protocol. Manages market listings, collateral factors, account liquidity checks, and liquidation eligibility. Provides methods to query all markets, compute account liquidity, calculate seizure amounts, and check liquidation conditions. Deployed on Ethereum, Optimism, and Base.
+
+    '
+  version: 1.0.0
+  contact:
+    name: Exactly Protocol
+    url: https://docs.exact.ly
+  license:
+    name: MIT
+    url: https://github.com/exactly/protocol/blob/main/LICENSE-MIT
+servers:
+- url: https://app.exact.ly
+  description: Exactly Protocol App
+tags:
+- name: Reward Configuration
+  description: Reward program configuration and indexes
+paths:
+  /rewards/rewardConfig:
+    post:
+      summary: Get reward distribution configuration
+      description: 'Returns the full reward distribution configuration for a specific market and reward token pair, including distribution speed and target parameters.
+
+        '
+      operationId: rewardConfig
+      tags:
+      - Reward Configuration
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - market
+              - reward
+              properties:
+                market:
+                  type: string
+                  description: Address of the Market contract
+                  pattern: ^0x[a-fA-F0-9]{40}$
+                reward:
+                  type: string
+                  description: Address of the reward token
+                  pattern: ^0x[a-fA-F0-9]{40}$
+      responses:
+        '200':
+          description: Reward configuration
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RewardConfig'
+  /rewards/distributionTime:
+    post:
+      summary: Get reward distribution timeline
+      description: 'Returns the start time, end time, and last update time for a reward distribution program on a specific market.
+
+        '
+      operationId: distributionTime
+      tags:
+      - Reward Configuration
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - market
+              - reward
+              properties:
+                market:
+                  type: string
+                  description: Address of the Market contract
+                  pattern: ^0x[a-fA-F0-9]{40}$
+                reward:
+                  type: string
+                  description: Address of the reward token
+                  pattern: ^0x[a-fA-F0-9]{40}$
+      responses:
+        '200':
+          description: Distribution timeline
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  start:
+                    type: integer
+                    description: Unix timestamp when the distribution started
+                  end:
+                    type: integer
+                    description: Unix timestamp when the distribution ends
+                  lastUpdate:
+                    type: integer
+                    description: Unix timestamp of the last reward index update
+  /rewards/rewardIndexes:
+    post:
+      summary: Get current reward indexes
+      description: 'Returns the current deposit reward index, borrow reward index, and last update time for a market-reward pair.
+
+        '
+      operationId: rewardIndexes
+      tags:
+      - Reward Configuration
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - market
+              - reward
+              properties:
+                market:
+                  type: string
+                  description: Address of the Market contract
+                  pattern: ^0x[a-fA-F0-9]{40}$
+                reward:
+                  type: string
+                  description: Address of the reward token
+                  pattern: ^0x[a-fA-F0-9]{40}$
+      responses:
+        '200':
+          description: Current reward indexes
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  borrowIndex:
+                    type: string
+                    description: Current global borrow reward index
+                  depositIndex:
+                    type: string
+                    description: Current global deposit reward index
+                  lastUpdate:
+                    type: integer
+                    description: Unix timestamp of the last index update
+components:
+  schemas:
+    RewardConfig:
+      type: object
+      description: Full reward distribution configuration for a market-reward pair
+      properties:
+        market:
+          type: string
+          description: Market contract address
+          pattern: ^0x[a-fA-F0-9]{40}$
+        reward:
+          type: string
+          description: Reward token address
+          pattern: ^0x[a-fA-F0-9]{40}$
+        priceFeed:
+          type: string
+          description: Price feed address for the reward token
+          pattern: ^0x[a-fA-F0-9]{40}$
+        start:
+          type: integer
+          description: Distribution start timestamp
+        distributionPeriod:
+          type: integer
+          description: Duration of the distribution period in seconds
+        targetDebt:
+          type: string
+          description: Target total debt to optimize distribution around
+        totalDistribution:
+          type: string
+          description: Total reward tokens to distribute over the period (in wei)
+        undistributedFactor:
+          type: string
+          description: Factor for undistributed rewards (scaled by 1e18)
+        flipSpeed:
+          type: string
+          description: Speed at which deposit/borrow split adjusts
+        compensationFactor:
+          type: string
+          description: Compensation factor for the reward split
+        transitionFactor:
+          type: string
+          description: Factor controlling the transition between deposit and borrow rewards
+        borrowAllocationWeightFactor:
+          type: string
+          description: Weight factor for borrow allocation
+        depositAllocationWeightAddend:
+          type: string
+          description: Addend for deposit allocation weight
+        depositAllocationWeightFactor:
+          type: string
+          description: Weight factor for deposit allocation
+externalDocs:
+  description: Exactly Protocol Auditor Documentation
+  url: https://docs.exact.ly/guides/protocol/auditor.md

@@ -1,0 +1,106 @@
+openapi: 3.1.0
+info:
+  title: Exactly Protocol Auditor ERC-4626 Market State API
+  description: 'Smart contract interface for the Auditor, the central risk management component of Exactly Protocol. Manages market listings, collateral factors, account liquidity checks, and liquidation eligibility. Provides methods to query all markets, compute account liquidity, calculate seizure amounts, and check liquidation conditions. Deployed on Ethereum, Optimism, and Base.
+
+    '
+  version: 1.0.0
+  contact:
+    name: Exactly Protocol
+    url: https://docs.exact.ly
+  license:
+    name: MIT
+    url: https://github.com/exactly/protocol/blob/main/LICENSE-MIT
+servers:
+- url: https://app.exact.ly
+  description: Exactly Protocol App
+tags:
+- name: Market State
+  description: View methods for querying market state
+paths:
+  /market/accountSnapshot:
+    post:
+      summary: Get account snapshot
+      description: Returns the total floating deposit assets and total owed debt for an account.
+      operationId: accountSnapshot
+      tags:
+      - Market State
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - account
+              properties:
+                account:
+                  type: string
+                  description: Address to snapshot
+                  pattern: ^0x[a-fA-F0-9]{40}$
+      responses:
+        '200':
+          description: Account snapshot
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  depositAssets:
+                    type: string
+                    description: Total floating deposit assets (in wei)
+                  owedDebt:
+                    type: string
+                    description: Total owed variable debt (in wei)
+  /market/previewDebt:
+    post:
+      summary: Preview total debt for a borrower
+      description: Returns the total outstanding variable debt for a borrower.
+      operationId: previewDebt
+      tags:
+      - Market State
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - borrower
+              properties:
+                borrower:
+                  type: string
+                  description: Address of the borrower
+                  pattern: ^0x[a-fA-F0-9]{40}$
+      responses:
+        '200':
+          description: Total debt amount
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  debt:
+                    type: string
+                    description: Total outstanding debt in underlying asset units (in wei)
+  /market/totalAssets:
+    get:
+      summary: Get total assets
+      description: Returns total assets managed by the market vault (ERC-4626).
+      operationId: totalAssets
+      tags:
+      - Market State
+      responses:
+        '200':
+          description: Total managed assets
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  totalAssets:
+                    type: string
+                    description: Total assets in underlying token units (in wei)
+externalDocs:
+  description: Exactly Protocol Auditor Documentation
+  url: https://docs.exact.ly/guides/protocol/auditor.md

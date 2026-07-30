@@ -7,6 +7,18 @@ description: 'Exactly Protocol is a decentralized, non-custodial, open-source pr
   system with the EXA governance token.
 
   '
+accessModel:
+  pricing: free
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Free
+  confidence: medium
+  source:
+  - plans
+  generated: '2026-07-22'
+  method: derived
 image: https://exact.ly/favicon.ico
 tags:
 - DeFi
@@ -25,12 +37,10 @@ url: https://raw.githubusercontent.com/api-evangelist/exactly/refs/heads/main/ap
 specificationVersion: '0.19'
 apis:
 - name: Exactly Protocol Previewer API
-  description: 'Read-only smart contract interface for previewing deposits, borrows,
-    withdrawals, and repayments across all market maturity pools. Returns projected
-    yields, repayment amounts, and comprehensive account positions across all markets
-    on Ethereum and Optimism without executing any transactions.
-
-    '
+  description: >
+    Read-only smart contract interface for previewing deposits, borrows, withdrawals, and repayments across
+    all market maturity pools. Returns projected yields, repayment amounts, and comprehensive account
+    positions across all markets on Ethereum and Optimism without executing any transactions.
   image: https://exact.ly/favicon.ico
   humanURL: https://docs.exact.ly/guides/periphery-contracts/previewer-read-only.md
   baseURL: https://app.exact.ly
@@ -46,7 +56,8 @@ apis:
   - type: Plans
     url: https://raw.githubusercontent.com/api-evangelist/exactly/refs/heads/main/plans/plans.yml
   - type: RateLimits
-    url: https://raw.githubusercontent.com/api-evangelist/exactly/refs/heads/main/rate-limits/rate-limits.yml
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/exactly/refs/heads/main/rate-limits/rate-limits.yml
   - url: graphql/exactly-graphql.md
     type: GraphQL
   contact:
@@ -54,12 +65,10 @@ apis:
     url: https://docs.exact.ly
     email: ''
 - name: Exactly Protocol Market API
-  description: 'ERC-4626-compliant smart contract interface for the core Market contract
-    exposing view and write methods for depositing, borrowing, withdrawing, repaying,
-    minting, redeeming, and liquidating positions at both variable and fixed rates.
-    Includes account snapshots, debt previews, and floating asset calculations.
-
-    '
+  description: >
+    ERC-4626-compliant smart contract interface for the core Market contract exposing view and write methods
+    for depositing, borrowing, withdrawing, repaying, minting, redeeming, and liquidating positions at
+    both variable and fixed rates. Includes account snapshots, debt previews, and floating asset calculations.
   image: https://exact.ly/favicon.ico
   humanURL: https://docs.exact.ly/guides/protocol/market.md
   baseURL: https://app.exact.ly
@@ -77,18 +86,18 @@ apis:
   - type: Plans
     url: https://raw.githubusercontent.com/api-evangelist/exactly/refs/heads/main/plans/plans.yml
   - type: RateLimits
-    url: https://raw.githubusercontent.com/api-evangelist/exactly/refs/heads/main/rate-limits/rate-limits.yml
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/exactly/refs/heads/main/rate-limits/rate-limits.yml
   contact:
   - FN: Exactly Protocol
     url: https://docs.exact.ly
     email: ''
 - name: Exactly Protocol Auditor API
-  description: 'Smart contract interface for the Auditor, the central risk management
-    component that manages market listings, collateral factors, account liquidity
-    checks, and liquidation eligibility. Provides methods to query all markets, compute
-    account liquidity, calculate seizure amounts, and check liquidation conditions.
-
-    '
+  description: >
+    Smart contract interface for the Auditor, the central risk management component that manages market
+    listings, collateral factors, account liquidity checks, and liquidation eligibility. Provides methods
+    to query all markets, compute account liquidity, calculate seizure amounts, and check liquidation
+    conditions.
   image: https://exact.ly/favicon.ico
   humanURL: https://docs.exact.ly/guides/protocol/auditor.md
   baseURL: https://app.exact.ly
@@ -105,18 +114,17 @@ apis:
   - type: Plans
     url: https://raw.githubusercontent.com/api-evangelist/exactly/refs/heads/main/plans/plans.yml
   - type: RateLimits
-    url: https://raw.githubusercontent.com/api-evangelist/exactly/refs/heads/main/rate-limits/rate-limits.yml
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/exactly/refs/heads/main/rate-limits/rate-limits.yml
   contact:
   - FN: Exactly Protocol
     url: https://docs.exact.ly
     email: ''
 - name: Exactly Protocol RewardsController API
-  description: 'Smart contract interface for querying and claiming EXA and esEXA token
-    rewards distributed to depositors and borrowers. Supports querying claimable rewards,
-    reward configurations, distribution timelines, reward indexes, and claiming rewards
-    across all market operations.
-
-    '
+  description: >
+    Smart contract interface for querying and claiming EXA and esEXA token rewards distributed to depositors
+    and borrowers. Supports querying claimable rewards, reward configurations, distribution timelines,
+    reward indexes, and claiming rewards across all market operations.
   image: https://exact.ly/favicon.ico
   humanURL: https://docs.exact.ly/guides/protocol/rewardscontroller.md
   baseURL: https://app.exact.ly
@@ -132,18 +140,18 @@ apis:
   - type: Plans
     url: https://raw.githubusercontent.com/api-evangelist/exactly/refs/heads/main/plans/plans.yml
   - type: RateLimits
-    url: https://raw.githubusercontent.com/api-evangelist/exactly/refs/heads/main/rate-limits/rate-limits.yml
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/exactly/refs/heads/main/rate-limits/rate-limits.yml
   contact:
   - FN: Exactly Protocol
     url: https://docs.exact.ly
     email: ''
 - name: Exactly Protocol Subgraph API (The Graph)
-  description: 'GraphQL subgraph API powered by The Graph for querying indexed on-chain
-    data from Exactly Protocol on Ethereum mainnet and Optimism. Supports advanced
-    queries including aggregation, filtering, relationships, and historical data for
-    markets, user positions, maturity pools, borrowing rates, and protocol-wide statistics.
-
-    '
+  description: >
+    GraphQL subgraph API powered by The Graph for querying indexed on-chain data from Exactly Protocol
+    on Ethereum mainnet and Optimism. Supports advanced queries including aggregation, filtering, relationships,
+    and historical data for markets, user positions, maturity pools, borrowing rates, and protocol-wide
+    statistics.
   image: https://exact.ly/favicon.ico
   humanURL: https://docs.exact.ly/guides/the-graph.md
   baseURL: https://api.thegraph.com
@@ -165,11 +173,132 @@ apis:
   - type: Plans
     url: https://raw.githubusercontent.com/api-evangelist/exactly/refs/heads/main/plans/plans.yml
   - type: RateLimits
-    url: https://raw.githubusercontent.com/api-evangelist/exactly/refs/heads/main/rate-limits/rate-limits.yml
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/exactly/refs/heads/main/rate-limits/rate-limits.yml
   contact:
   - FN: Exactly Protocol
     url: https://docs.exact.ly
     email: ''
+- aid: exactly:exactly-erc-4626-api
+  name: Exactly Protocol ERC-4626 API
+  description: ERC-4626 vault standard methods
+  humanURL: https://docs.exact.ly/guides/periphery-contracts/previewer-read-only.md
+  baseURL: https://app.exact.ly
+  tags:
+  - ERC-4626
+  properties:
+  - type: OpenAPI
+    url: openapi/exactly-erc-4626-api-openapi.yml
+- aid: exactly:exactly-fixed-rate-api
+  name: Exactly Protocol Fixed Rate API
+  description: Fixed rate maturity pool operations
+  humanURL: https://docs.exact.ly/guides/periphery-contracts/previewer-read-only.md
+  baseURL: https://app.exact.ly
+  tags:
+  - Fixed Rate
+  properties:
+  - type: OpenAPI
+    url: openapi/exactly-fixed-rate-api-openapi.yml
+- aid: exactly:exactly-liquidations-api
+  name: Exactly Protocol Liquidations API
+  description: Liquidation eligibility and seizure calculations
+  humanURL: https://docs.exact.ly/guides/periphery-contracts/previewer-read-only.md
+  baseURL: https://app.exact.ly
+  tags:
+  - Liquidations
+  properties:
+  - type: OpenAPI
+    url: openapi/exactly-liquidations-api-openapi.yml
+- aid: exactly:exactly-liquidity-api
+  name: Exactly Protocol Liquidity API
+  description: Account liquidity and collateral checks
+  humanURL: https://docs.exact.ly/guides/periphery-contracts/previewer-read-only.md
+  baseURL: https://app.exact.ly
+  tags:
+  - Liquidity
+  properties:
+  - type: OpenAPI
+    url: openapi/exactly-liquidity-api-openapi.yml
+- aid: exactly:exactly-market-management-api
+  name: Exactly Protocol Market Management API
+  description: Write methods for market configuration (admin only)
+  humanURL: https://docs.exact.ly/guides/periphery-contracts/previewer-read-only.md
+  baseURL: https://app.exact.ly
+  tags:
+  - Market Management
+  properties:
+  - type: OpenAPI
+    url: openapi/exactly-market-management-api-openapi.yml
+- aid: exactly:exactly-market-state-api
+  name: Exactly Protocol Market State API
+  description: View methods for querying market state
+  humanURL: https://docs.exact.ly/guides/periphery-contracts/previewer-read-only.md
+  baseURL: https://app.exact.ly
+  tags:
+  - Market State
+  properties:
+  - type: OpenAPI
+    url: openapi/exactly-market-state-api-openapi.yml
+- aid: exactly:exactly-markets-api
+  name: Exactly Protocol Markets API
+  description: Market listing and configuration queries
+  humanURL: https://docs.exact.ly/guides/periphery-contracts/previewer-read-only.md
+  baseURL: https://app.exact.ly
+  tags:
+  - Markets
+  properties:
+  - type: OpenAPI
+    url: openapi/exactly-markets-api-openapi.yml
+- aid: exactly:exactly-previewer-api
+  name: Exactly Protocol Previewer API
+  description: Read-only preview methods for Exactly Protocol markets
+  humanURL: https://docs.exact.ly/guides/periphery-contracts/previewer-read-only.md
+  baseURL: https://app.exact.ly
+  tags:
+  - Previewer
+  properties:
+  - type: OpenAPI
+    url: openapi/exactly-previewer-api-openapi.yml
+- aid: exactly:exactly-reward-configuration-api
+  name: Exactly Protocol Reward Configuration API
+  description: Reward program configuration and indexes
+  humanURL: https://docs.exact.ly/guides/periphery-contracts/previewer-read-only.md
+  baseURL: https://app.exact.ly
+  tags:
+  - Reward Configuration
+  properties:
+  - type: OpenAPI
+    url: openapi/exactly-reward-configuration-api-openapi.yml
+- aid: exactly:exactly-rewards-claims-api
+  name: Exactly Protocol Rewards Claims API
+  description: Write methods for claiming earned rewards
+  humanURL: https://docs.exact.ly/guides/periphery-contracts/previewer-read-only.md
+  baseURL: https://app.exact.ly
+  tags:
+  - Rewards Claims
+  properties:
+  - type: OpenAPI
+    url: openapi/exactly-rewards-claims-api-openapi.yml
+- aid: exactly:exactly-rewards-query-api
+  name: Exactly Protocol Rewards Query API
+  description: View methods for querying reward state and amounts
+  humanURL: https://docs.exact.ly/guides/periphery-contracts/previewer-read-only.md
+  baseURL: https://app.exact.ly
+  tags:
+  - Rewards Query
+  properties:
+  - type: OpenAPI
+    url: openapi/exactly-rewards-query-api-openapi.yml
+- aid: exactly:exactly-variable-rate-api
+  name: Exactly Protocol Variable Rate API
+  description: Floating/variable rate deposit and borrow operations
+  humanURL: https://docs.exact.ly/guides/periphery-contracts/previewer-read-only.md
+  baseURL: https://app.exact.ly
+  tags:
+  - Variable Rate
+  properties:
+  - type: OpenAPI
+    url: openapi/exactly-variable-rate-api-openapi.yml
 common:
 - type: AgenticAccess
   url: agentic-access/exactly-agentic-access.yml

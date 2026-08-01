@@ -1,0 +1,36 @@
+{
+  "provider": "exactly",
+  "sources": [
+    "exactly-erc-4626-api-openapi.yml",
+    "exactly-fixed-rate-api-openapi.yml",
+    "exactly-liquidations-api-openapi.yml",
+    "exactly-liquidity-api-openapi.yml",
+    "exactly-market-management-api-openapi.yml",
+    "exactly-market-state-api-openapi.yml",
+    "exactly-markets-api-openapi.yml",
+    "exactly-previewer-api-openapi.yml",
+    "exactly-reward-configuration-api-openapi.yml",
+    "exactly-rewards-claims-api-openapi.yml",
+    "exactly-rewards-query-api-openapi.yml",
+    "exactly-variable-rate-api-openapi.yml"
+  ],
+  "outputs": [
+    "exactly-erc-4626-api-openapi.yml",
+    "exactly-fixed-rate-api-openapi.yml",
+    "exactly-liquidations-api-openapi.yml",
+    "exactly-liquidity-api-openapi.yml",
+    "exactly-market-management-api-openapi.yml",
+    "exactly-market-state-api-openapi.yml",
+    "exactly-markets-api-openapi.yml",
+    "exactly-previewer-api-openapi.yml",
+    "exactly-reward-configuration-api-openapi.yml",
+    "exactly-rewards-claims-api-openapi.yml",
+    "exactly-rewards-query-api-openapi.yml",
+    "exactly-variable-rate-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

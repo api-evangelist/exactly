@@ -1,0 +1,328 @@
+openapi: 3.1.0
+info:
+  title: Exactly Protocol Auditor API
+  description: >
+    Smart contract interface for the Auditor, the central risk management component
+    of Exactly Protocol. Manages market listings, collateral factors, account
+    liquidity checks, and liquidation eligibility. Provides methods to query all
+    markets, compute account liquidity, calculate seizure amounts, and check
+    liquidation conditions. Deployed on Ethereum, Optimism, and Base.
+  version: "1.0.0"
+  contact:
+    name: Exactly Protocol
+    url: https://docs.exact.ly
+  license:
+    name: MIT
+    url: https://github.com/exactly/protocol/blob/main/LICENSE-MIT
+externalDocs:
+  description: Exactly Protocol Auditor Documentation
+  url: https://docs.exact.ly/guides/protocol/auditor.md
+servers:
+  - url: https://app.exact.ly
+    description: Exactly Protocol App
+tags:
+  - name: Markets
+    description: Market listing and configuration queries
+  - name: Liquidity
+    description: Account liquidity and collateral checks
+  - name: Liquidations
+    description: Liquidation eligibility and seizure calculations
+  - name: Market Management
+    description: Write methods for market configuration (admin only)
+paths:
+  /auditor/allMarkets:
+    get:
+      summary: Get all listed markets
+      description: Returns an array of all Market contract addresses listed in the Auditor.
+      operationId: allMarkets
+      tags:
+        - Markets
+      responses:
+        "200":
+          description: Array of listed market addresses
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  markets:
+                    type: array
+                    description: Array of Market contract addresses
+                    items:
+                      type: string
+                      pattern: "^0x[a-fA-F0-9]{40}$"
+  /auditor/markets:
+    post:
+      summary: Get market configuration
+      description: >
+        Returns the configuration for a specific market including its adjust factor,
+        decimal precision, list index, listing status, and price feed address.
+      operationId: markets
+      tags:
+        - Markets
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - market
+              properties:
+                market:
+                  type: string
+                  description: Address of the Market contract
+                  pattern: "^0x[a-fA-F0-9]{40}$"
+      responses:
+        "200":
+          description: Market configuration
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MarketConfig"
+  /auditor/accountLiquidity:
+    post:
+      summary: Compute account liquidity
+      description: >
+        Computes the total collateral value and total debt (plus effects of a
+        simulated withdrawal) for an account across all enabled markets.
+        Used to determine if an account is solvent or eligible for liquidation.
+      operationId: accountLiquidity
+      tags:
+        - Liquidity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - account
+                - marketToSimulate
+                - withdrawAmount
+              properties:
+                account:
+                  type: string
+                  description: Address of the account to evaluate
+                  pattern: "^0x[a-fA-F0-9]{40}$"
+                marketToSimulate:
+                  type: string
+                  description: Market to simulate a withdrawal from (use zero address for none)
+                  pattern: "^0x[a-fA-F0-9]{40}$"
+                withdrawAmount:
+                  type: string
+                  description: Amount to simulate withdrawing (in wei, use 0 for no simulation)
+      responses:
+        "200":
+          description: Account liquidity totals
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  sumCollateral:
+                    type: string
+                    description: Total collateral value in base currency units
+                  sumDebtPlusEffects:
+                    type: string
+                    description: Total debt plus simulated withdrawal effects in base currency units
+  /auditor/assetPrice:
+    post:
+      summary: Get asset price from a price feed
+      description: Returns the current USD price of an asset from the specified Chainlink price feed.
+      operationId: assetPrice
+      tags:
+        - Markets
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - priceFeed
+              properties:
+                priceFeed:
+                  type: string
+                  description: Address of the Chainlink-compatible price feed contract
+                  pattern: "^0x[a-fA-F0-9]{40}$"
+      responses:
+        "200":
+          description: Asset price
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  price:
+                    type: string
+                    description: Asset price in base currency units (scaled by priceDecimals)
+  /auditor/calculateSeize:
+    post:
+      summary: Calculate assets to seize during liquidation
+      description: >
+        Calculates the amount of collateral to seize from a borrower during
+        liquidation, accounting for the liquidation incentive and lender fees.
+      operationId: calculateSeize
+      tags:
+        - Liquidations
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - repayMarket
+                - seizeMarket
+                - borrower
+                - actualRepayAssets
+              properties:
+                repayMarket:
+                  type: string
+                  description: Market where the debt is being repaid
+                  pattern: "^0x[a-fA-F0-9]{40}$"
+                seizeMarket:
+                  type: string
+                  description: Market from which collateral is seized
+                  pattern: "^0x[a-fA-F0-9]{40}$"
+                borrower:
+                  type: string
+                  description: Address of the borrower being liquidated
+                  pattern: "^0x[a-fA-F0-9]{40}$"
+                actualRepayAssets:
+                  type: string
+                  description: Actual assets being repaid (in wei)
+      responses:
+        "200":
+          description: Seizure amounts
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  lendersAssets:
+                    type: string
+                    description: Assets allocated to lenders as incentive (in wei)
+                  seizeAssets:
+                    type: string
+                    description: Total collateral assets to seize from borrower (in wei)
+  /auditor/checkLiquidation:
+    post:
+      summary: Check liquidation eligibility and maximum repay
+      description: >
+        Verifies that a liquidation is valid and computes the maximum assets
+        the liquidator is allowed to repay given the dynamic close factor.
+      operationId: checkLiquidation
+      tags:
+        - Liquidations
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - repayMarket
+                - seizeMarket
+                - borrower
+                - maxLiquidatorAssets
+              properties:
+                repayMarket:
+                  type: string
+                  description: Market where the debt is being repaid
+                  pattern: "^0x[a-fA-F0-9]{40}$"
+                seizeMarket:
+                  type: string
+                  description: Market from which collateral is seized
+                  pattern: "^0x[a-fA-F0-9]{40}$"
+                borrower:
+                  type: string
+                  description: Address of the borrower being liquidated
+                  pattern: "^0x[a-fA-F0-9]{40}$"
+                maxLiquidatorAssets:
+                  type: string
+                  description: Maximum assets the liquidator wants to repay (in wei)
+      responses:
+        "200":
+          description: Maximum repayable assets
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  maxRepayAssets:
+                    type: string
+                    description: Maximum allowed repay amount after dynamic close factor (in wei)
+  /auditor/enterMarket:
+    post:
+      summary: Enable a market as collateral
+      description: >
+        Allows a caller to enable a listed market as collateral for their account,
+        making their deposits in that market count toward their borrowing capacity.
+      operationId: enterMarket
+      tags:
+        - Market Management
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - market
+              properties:
+                market:
+                  type: string
+                  description: Address of the Market to enable as collateral
+                  pattern: "^0x[a-fA-F0-9]{40}$"
+      responses:
+        "200":
+          description: Market entered as collateral successfully
+  /auditor/exitMarket:
+    post:
+      summary: Disable a market as collateral
+      description: >
+        Allows a caller to disable a market as collateral for their account,
+        provided doing so does not leave them undercollateralized.
+      operationId: exitMarket
+      tags:
+        - Market Management
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - market
+              properties:
+                market:
+                  type: string
+                  description: Address of the Market to disable as collateral
+                  pattern: "^0x[a-fA-F0-9]{40}$"
+      responses:
+        "200":
+          description: Market exited as collateral successfully
+components:
+  schemas:
+    MarketConfig:
+      type: object
+      description: Configuration for a listed market in the Auditor
+      properties:
+        adjustFactor:
+          type: string
+          description: Collateral adjust factor scaled by 1e18 (e.g., 0.8e18 = 80% LTV)
+        decimals:
+          type: integer
+          description: Decimal precision of the underlying asset
+        index:
+          type: integer
+          description: Index of this market in the marketList array
+        isListed:
+          type: boolean
+          description: Whether this market is currently listed and active
+        priceFeed:
+          type: string
+          description: Address of the Chainlink-compatible price feed for this market
+          pattern: "^0x[a-fA-F0-9]{40}$"

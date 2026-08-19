@@ -1,0 +1,290 @@
+{
+  "item": [
+    {
+      "id": "5a29d6b0-7b9d-4cf5-9761-c8e3d4ba6542",
+      "name": "Market State",
+      "description": {
+        "content": "View methods for querying market state",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "bfe8a2bc-e3d6-45f9-8d6a-ecc7509af91c",
+          "name": "Get account snapshot",
+          "request": {
+            "name": "Get account snapshot",
+            "description": {
+              "content": "Returns the total floating deposit assets and total owed debt for an account.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "market",
+                "accountSnapshot"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"account\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "360de827-b694-47fe-b3f8-c1322515a60e",
+              "name": "Account snapshot",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "market",
+                    "accountSnapshot"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"account\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"depositAssets\": \"string\",\n  \"owedDebt\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3899c2de-1bc7-4b40-9559-1d9bf32a49b1",
+          "name": "Preview total debt for a borrower",
+          "request": {
+            "name": "Preview total debt for a borrower",
+            "description": {
+              "content": "Returns the total outstanding variable debt for a borrower.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "market",
+                "previewDebt"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"borrower\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "af79efbe-9e51-4a1e-bebb-6f66bba6144c",
+              "name": "Total debt amount",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "market",
+                    "previewDebt"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"borrower\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"debt\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2d53b43c-16f9-4f31-bb4d-f9784818fc86",
+          "name": "Get total assets",
+          "request": {
+            "name": "Get total assets",
+            "description": {
+              "content": "Returns total assets managed by the market vault (ERC-4626).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "market",
+                "totalAssets"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0e133fde-f706-482e-8657-5bcf7fca3124",
+              "name": "Total managed assets",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "market",
+                    "totalAssets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"totalAssets\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://app.exact.ly",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "96227adb-bc7a-42ae-a0ba-96aa67f12993",
+    "name": "Exactly Protocol Auditor ERC-4626 Market State API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Smart contract interface for the Auditor, the central risk management component of Exactly Protocol. Manages market listings, collateral factors, account liquidity checks, and liquidation eligibility. Provides methods to query all markets, compute account liquidity, calculate seizure amounts, and check liquidation conditions. Deployed on Ethereum, Optimism, and Base.\n\n\nContact Support:\n Name: Exactly Protocol",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,404 @@
+{
+  "item": [
+    {
+      "id": "1b855b4a-52b5-4d1c-80e4-334dbd39c802",
+      "name": "Fixed Rate",
+      "description": {
+        "content": "Fixed rate maturity pool operations",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "949a06f9-cc7d-4b6b-adf8-ec73717795a7",
+          "name": "Deposit assets at a fixed rate maturity pool",
+          "request": {
+            "name": "Deposit assets at a fixed rate maturity pool",
+            "description": {
+              "content": "Deposits assets into a specific maturity pool to earn a fixed rate of return. The minAssetsRequired parameter protects against slippage.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "market",
+                "depositAtMaturity"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"maturity\": \"<integer>\",\n  \"assets\": \"<string>\",\n  \"minAssetsRequired\": \"<string>\",\n  \"receiver\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "81ab75ca-fd99-4de7-b6a8-fbb7fb363221",
+              "name": "Position assets received",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "market",
+                    "depositAtMaturity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"maturity\": \"<integer>\",\n  \"assets\": \"<string>\",\n  \"minAssetsRequired\": \"<string>\",\n  \"receiver\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"positionAssets\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "baac16c8-ea9b-4bdb-82d7-626a1494f7d0",
+          "name": "Withdraw assets from a fixed rate maturity pool",
+          "request": {
+            "name": "Withdraw assets from a fixed rate maturity pool",
+            "description": {
+              "content": "Withdraws a fixed deposit position before or at maturity. Early withdrawal incurs a discount; at or after maturity no discount applies.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "market",
+                "withdrawAtMaturity"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"maturity\": \"<integer>\",\n  \"positionAssets\": \"<string>\",\n  \"minAssetsRequired\": \"<string>\",\n  \"receiver\": \"<string>\",\n  \"owner\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "fdd1a211-f8ad-414d-ab13-971177dfd57b",
+              "name": "Discounted assets received",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "market",
+                    "withdrawAtMaturity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"maturity\": \"<integer>\",\n  \"positionAssets\": \"<string>\",\n  \"minAssetsRequired\": \"<string>\",\n  \"receiver\": \"<string>\",\n  \"owner\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"assetsDiscounted\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9903b887-86fd-4e8f-91aa-ce78d71f10ff",
+          "name": "Borrow assets at a fixed rate maturity pool",
+          "request": {
+            "name": "Borrow assets at a fixed rate maturity pool",
+            "description": {
+              "content": "Borrows assets from a specific maturity pool at a fixed interest rate. The maxAssets parameter limits slippage on the borrow fee.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "market",
+                "borrowAtMaturity"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"maturity\": \"<integer>\",\n  \"assets\": \"<string>\",\n  \"maxAssets\": \"<string>\",\n  \"receiver\": \"<string>\",\n  \"borrower\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7bb4b981-e339-4803-85e5-324f75908d1b",
+              "name": "Total assets owed at maturity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "market",
+                    "borrowAtMaturity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"maturity\": \"<integer>\",\n  \"assets\": \"<string>\",\n  \"maxAssets\": \"<string>\",\n  \"receiver\": \"<string>\",\n  \"borrower\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"assetsOwed\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "01aa2a65-0596-4da2-bef6-eca74fa24d2b",
+          "name": "Repay a fixed rate borrow at maturity",
+          "request": {
+            "name": "Repay a fixed rate borrow at maturity",
+            "description": {
+              "content": "Repays a fixed-rate borrow position at or before its maturity date. Early repayment may qualify for a discount.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "market",
+                "repayAtMaturity"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"maturity\": \"<integer>\",\n  \"positionAssets\": \"<string>\",\n  \"maxAssets\": \"<string>\",\n  \"borrower\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "26800559-a8aa-4d7c-a516-a0ae39e6270d",
+              "name": "Actual repaid assets",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "market",
+                    "repayAtMaturity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"maturity\": \"<integer>\",\n  \"positionAssets\": \"<string>\",\n  \"maxAssets\": \"<string>\",\n  \"borrower\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"actualRepayAssets\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://app.exact.ly",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "8dedd165-3604-4d8c-80b0-d4b3b5278b40",
+    "name": "Exactly Protocol Auditor ERC-4626 Fixed Rate API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Smart contract interface for the Auditor, the central risk management component of Exactly Protocol. Manages market listings, collateral factors, account liquidity checks, and liquidation eligibility. Provides methods to query all markets, compute account liquidity, calculate seizure amounts, and check liquidation conditions. Deployed on Ethereum, Optimism, and Base.\n\n\nContact Support:\n Name: Exactly Protocol",
+      "type": "text/plain"
+    }
+  }
+}

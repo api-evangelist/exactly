@@ -1,0 +1,59 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Exactly Protocol Auditor ERC-4626 Markets API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Markets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all listed markets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.exact.ly/auditor/allMarkets"
+          },
+          "docs": "Returns an array of all Market contract addresses listed in the Auditor."
+        },
+        {
+          "info": {
+            "name": "Get market configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.exact.ly/auditor/markets",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns the configuration for a specific market including its adjust factor, decimal precision, list index, listing status, and price feed address.\n"
+        },
+        {
+          "info": {
+            "name": "Get asset price from a price feed",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.exact.ly/auditor/assetPrice",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns the current USD price of an asset from the specified Chainlink price feed."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

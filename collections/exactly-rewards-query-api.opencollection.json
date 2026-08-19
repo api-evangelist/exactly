@@ -1,0 +1,85 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Exactly Protocol Auditor ERC-4626 Rewards Query API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Rewards Query",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all reward tokens",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.exact.ly/rewards/allRewards"
+          },
+          "docs": "Returns an array of all ERC-20 reward tokens registered in the RewardsController."
+        },
+        {
+          "info": {
+            "name": "Get all market operations eligible for rewards",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.exact.ly/rewards/allMarketsOperations"
+          },
+          "docs": "Returns all market-operation pairs (deposit/borrow) registered for reward distribution."
+        },
+        {
+          "info": {
+            "name": "Get total claimable reward amount for an account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.exact.ly/rewards/allClaimable",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns the total amount of a specific reward token claimable by an account across all markets and operations.\n"
+        },
+        {
+          "info": {
+            "name": "Get claimable rewards for specific market operations",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.exact.ly/rewards/claimable",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns the claimable amount of a specific reward token for an account across a specified list of market operations.\n"
+        },
+        {
+          "info": {
+            "name": "Preview reward allocation for a time period",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.exact.ly/rewards/previewAllocation",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns projected deposit and borrow reward allocations and utilization for a specified time delta, useful for estimating rewards APR.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

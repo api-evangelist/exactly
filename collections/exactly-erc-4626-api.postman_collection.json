@@ -1,0 +1,476 @@
+{
+  "item": [
+    {
+      "id": "aff15cba-01a1-4835-9032-e42596405bbe",
+      "name": "ERC-4626",
+      "description": {
+        "content": "ERC-4626 vault standard methods",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "5862c59a-8c79-4e5d-95bb-001d67eaa897",
+          "name": "Get total assets",
+          "request": {
+            "name": "Get total assets",
+            "description": {
+              "content": "Returns total assets managed by the market vault (ERC-4626).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "market",
+                "totalAssets"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "638e439d-2df9-4567-bf65-35b9c339c102",
+              "name": "Total managed assets",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "market",
+                    "totalAssets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"totalAssets\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "da79d6de-b4ff-4827-a187-77335dc155dd",
+          "name": "Convert shares to assets",
+          "request": {
+            "name": "Convert shares to assets",
+            "description": {
+              "content": "Returns the amount of underlying assets equivalent to the given number of shares.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "market",
+                "convertToAssets"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"shares\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "42bfba2d-91ae-4023-86ac-20ad634ede2a",
+              "name": "Equivalent asset amount",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "market",
+                    "convertToAssets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"shares\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"assets\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3ca6c986-d6ac-49e2-be2d-9c71e1ee0515",
+          "name": "Convert assets to shares",
+          "request": {
+            "name": "Convert assets to shares",
+            "description": {
+              "content": "Returns the number of shares equivalent to the given amount of underlying assets.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "market",
+                "convertToShares"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"assets\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4639b247-dc20-4c1a-884f-dc51adc6aec7",
+              "name": "Equivalent share amount",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "market",
+                    "convertToShares"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"assets\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"shares\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f83d694b-1be1-4d78-850e-b9b14cf96d62",
+          "name": "Deposit assets at variable rate",
+          "request": {
+            "name": "Deposit assets at variable rate",
+            "description": {
+              "content": "Deposits underlying assets into the floating pool and mints ERC-4626 shares to the receiver. Returns the number of shares minted.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "market",
+                "deposit"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"assets\": \"<string>\",\n  \"receiver\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d53a2528-5c51-4930-880e-7799e0202f27",
+              "name": "Shares minted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "market",
+                    "deposit"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"assets\": \"<string>\",\n  \"receiver\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"shares\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "48de0414-b32d-462b-91eb-bd5e27f29aa4",
+          "name": "Withdraw assets at variable rate",
+          "request": {
+            "name": "Withdraw assets at variable rate",
+            "description": {
+              "content": "Withdraws a specific amount of underlying assets from the floating pool, burning the required shares from the owner's balance.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "market",
+                "withdraw"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"assets\": \"<string>\",\n  \"receiver\": \"<string>\",\n  \"owner\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b3a60634-f501-41c3-94e1-894853af95df",
+              "name": "Shares burned",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "market",
+                    "withdraw"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"assets\": \"<string>\",\n  \"receiver\": \"<string>\",\n  \"owner\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"shares\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://app.exact.ly",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "95df4ed8-f6ea-4d89-a6db-7305fd890293",
+    "name": "Exactly Protocol Auditor ERC-4626 API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Smart contract interface for the Auditor, the central risk management component of Exactly Protocol. Manages market listings, collateral factors, account liquidity checks, and liquidation eligibility. Provides methods to query all markets, compute account liquidity, calculate seizure amounts, and check liquidation conditions. Deployed on Ethereum, Optimism, and Base.\n\n\nContact Support:\n Name: Exactly Protocol",
+      "type": "text/plain"
+    }
+  }
+}

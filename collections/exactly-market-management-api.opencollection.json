@@ -1,0 +1,48 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Exactly Protocol Auditor ERC-4626 Market Management API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Market Management",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Enable a market as collateral",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.exact.ly/auditor/enterMarket",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Allows a caller to enable a listed market as collateral for their account, making their deposits in that market count toward their borrowing capacity.\n"
+        },
+        {
+          "info": {
+            "name": "Disable a market as collateral",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.exact.ly/auditor/exitMarket",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Allows a caller to disable a market as collateral for their account, provided doing so does not leave them undercollateralized.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

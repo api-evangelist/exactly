@@ -1,0 +1,59 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Exactly Protocol Auditor ERC-4626 Market State API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Market State",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get account snapshot",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.exact.ly/market/accountSnapshot",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns the total floating deposit assets and total owed debt for an account."
+        },
+        {
+          "info": {
+            "name": "Preview total debt for a borrower",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.exact.ly/market/previewDebt",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns the total outstanding variable debt for a borrower."
+        },
+        {
+          "info": {
+            "name": "Get total assets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.exact.ly/market/totalAssets"
+          },
+          "docs": "Returns total assets managed by the market vault (ERC-4626)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

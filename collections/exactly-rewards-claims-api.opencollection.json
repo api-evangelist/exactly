@@ -1,0 +1,48 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Exactly Protocol Auditor ERC-4626 Rewards Claims API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Rewards Claims",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Claim rewards for specific market operations",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.exact.ly/rewards/claim",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Claims earned rewards for a list of market-operation pairs and sends the specified reward tokens to the designated address.\n"
+        },
+        {
+          "info": {
+            "name": "Claim all rewards for the caller",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.exact.ly/rewards/claimAll",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Claims all earned rewards across all markets and all reward tokens, sending them to the specified address.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

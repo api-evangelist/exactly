@@ -1,0 +1,63 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Exactly Protocol Auditor ERC-4626 Reward Configuration API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Reward Configuration",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get reward distribution configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.exact.ly/rewards/rewardConfig",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns the full reward distribution configuration for a specific market and reward token pair, including distribution speed and target parameters.\n"
+        },
+        {
+          "info": {
+            "name": "Get reward distribution timeline",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.exact.ly/rewards/distributionTime",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns the start time, end time, and last update time for a reward distribution program on a specific market.\n"
+        },
+        {
+          "info": {
+            "name": "Get current reward indexes",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.exact.ly/rewards/rewardIndexes",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns the current deposit reward index, borrow reward index, and last update time for a market-reward pair.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

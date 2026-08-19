@@ -1,0 +1,218 @@
+{
+  "item": [
+    {
+      "id": "7faf5ebd-7ee0-44f5-8d3e-35a24b9cdca7",
+      "name": "Rewards Claims",
+      "description": {
+        "content": "Write methods for claiming earned rewards",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "45ed6304-bdfb-4f1b-ab19-8e141cc47c45",
+          "name": "Claim rewards for specific market operations",
+          "request": {
+            "name": "Claim rewards for specific market operations",
+            "description": {
+              "content": "Claims earned rewards for a list of market-operation pairs and sends the specified reward tokens to the designated address.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "rewards",
+                "claim"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"marketOps\": [\n    {\n      \"market\": \"<string>\",\n      \"operations\": [\n        \"<boolean>\",\n        \"<boolean>\"\n      ]\n    },\n    {\n      \"market\": \"<string>\",\n      \"operations\": [\n        \"<boolean>\",\n        \"<boolean>\"\n      ]\n    }\n  ],\n  \"to\": \"<string>\",\n  \"rewardsList\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f408ccc3-de5b-491f-a2a7-5c97f5e0e49a",
+              "name": "Claimed rewards summary",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rewards",
+                    "claim"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"marketOps\": [\n    {\n      \"market\": \"0xA84D272D2e63d703CCDaCDdEfaffFeF7020AE0F8\",\n      \"operations\": [\n        false,\n        false\n      ]\n    },\n    {\n      \"market\": \"0x2D9C53Fd9EF871e3d83BC2644a06ffaC8aF3ddAC\",\n      \"operations\": [\n        true,\n        false\n      ]\n    }\n  ],\n  \"to\": \"<string>\",\n  \"rewardsList\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"rewardsList\": [\n    \"0xd2b54696B98eFd8d224Db37ACD7c0B7dCbebBaf1\",\n    \"0x0F48EaEa4351a305EEeA8bDa961bFEDE2bC39c68\"\n  ],\n  \"claimedAmounts\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "203aa497-a5d2-478a-a48b-5c8c31a5e7ff",
+          "name": "Claim all rewards for the caller",
+          "request": {
+            "name": "Claim all rewards for the caller",
+            "description": {
+              "content": "Claims all earned rewards across all markets and all reward tokens, sending them to the specified address.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "rewards",
+                "claimAll"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"to\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9db50f84-d7eb-413e-823e-ed794336bb40",
+              "name": "All claimed rewards summary",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rewards",
+                    "claimAll"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"to\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"rewardsList\": [\n    \"0xd2b54696B98eFd8d224Db37ACD7c0B7dCbebBaf1\",\n    \"0x0F48EaEa4351a305EEeA8bDa961bFEDE2bC39c68\"\n  ],\n  \"claimedAmounts\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://app.exact.ly",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "231a2718-b196-4999-9e89-da80c3bbc6ae",
+    "name": "Exactly Protocol Auditor ERC-4626 Rewards Claims API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Smart contract interface for the Auditor, the central risk management component of Exactly Protocol. Manages market listings, collateral factors, account liquidity checks, and liquidation eligibility. Provides methods to query all markets, compute account liquidity, calculate seizure amounts, and check liquidation conditions. Deployed on Ethereum, Optimism, and Base.\n\n\nContact Support:\n Name: Exactly Protocol",
+      "type": "text/plain"
+    }
+  }
+}

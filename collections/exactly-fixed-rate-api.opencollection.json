@@ -1,0 +1,78 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Exactly Protocol Auditor ERC-4626 Fixed Rate API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Fixed Rate",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Deposit assets at a fixed rate maturity pool",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.exact.ly/market/depositAtMaturity",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Deposits assets into a specific maturity pool to earn a fixed rate of return. The minAssetsRequired parameter protects against slippage.\n"
+        },
+        {
+          "info": {
+            "name": "Withdraw assets from a fixed rate maturity pool",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.exact.ly/market/withdrawAtMaturity",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Withdraws a fixed deposit position before or at maturity. Early withdrawal incurs a discount; at or after maturity no discount applies.\n"
+        },
+        {
+          "info": {
+            "name": "Borrow assets at a fixed rate maturity pool",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.exact.ly/market/borrowAtMaturity",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Borrows assets from a specific maturity pool at a fixed interest rate. The maxAssets parameter limits slippage on the borrow fee.\n"
+        },
+        {
+          "info": {
+            "name": "Repay a fixed rate borrow at maturity",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.exact.ly/market/repayAtMaturity",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Repays a fixed-rate borrow position at or before its maturity date. Early repayment may qualify for a discount.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

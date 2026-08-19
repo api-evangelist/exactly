@@ -1,0 +1,78 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Exactly Protocol Auditor ERC-4626 Liquidations API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Liquidations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Calculate assets to seize during liquidation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.exact.ly/auditor/calculateSeize",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Calculates the amount of collateral to seize from a borrower during liquidation, accounting for the liquidation incentive and lender fees.\n"
+        },
+        {
+          "info": {
+            "name": "Check liquidation eligibility and maximum repay",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.exact.ly/auditor/checkLiquidation",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Verifies that a liquidation is valid and computes the maximum assets the liquidator is allowed to repay given the dynamic close factor.\n"
+        },
+        {
+          "info": {
+            "name": "Liquidate an undercollateralized borrower",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.exact.ly/market/liquidate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Liquidates a borrower's variable rate debt when their health factor falls below the threshold. The liquidator repays up to maxAssets of debt and receives collateral from the seizeMarket.\n"
+        },
+        {
+          "info": {
+            "name": "Clear bad debt for a borrower",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.exact.ly/market/clearBadDebt",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Clears bad debt from a borrower's account by using the earnings accumulator. Only callable when the borrower's collateral has been fully seized.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

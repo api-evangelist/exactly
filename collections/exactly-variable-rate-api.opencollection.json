@@ -1,0 +1,78 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Exactly Protocol Auditor ERC-4626 Variable Rate API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Variable Rate",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Deposit assets at variable rate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.exact.ly/market/deposit",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Deposits underlying assets into the floating pool and mints ERC-4626 shares to the receiver. Returns the number of shares minted.\n"
+        },
+        {
+          "info": {
+            "name": "Withdraw assets at variable rate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.exact.ly/market/withdraw",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Withdraws a specific amount of underlying assets from the floating pool, burning the required shares from the owner's balance.\n"
+        },
+        {
+          "info": {
+            "name": "Borrow assets at variable rate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.exact.ly/market/borrow",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Borrows assets from the floating pool at a variable interest rate and sends them to the receiver. Returns the borrow shares issued.\n"
+        },
+        {
+          "info": {
+            "name": "Repay variable rate debt",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.exact.ly/market/repay",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Repays a specific amount of assets toward a variable rate borrow position. Returns the actual assets repaid and borrow shares burned.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

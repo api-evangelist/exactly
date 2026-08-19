@@ -1,0 +1,455 @@
+{
+  "item": [
+    {
+      "id": "ed5ed840-f44c-4405-983e-bc1097854c2d",
+      "name": "Rewards Query",
+      "description": {
+        "content": "View methods for querying reward state and amounts",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "be7fbfe5-9965-4d13-b1b0-520ded8396f8",
+          "name": "Get all reward tokens",
+          "request": {
+            "name": "Get all reward tokens",
+            "description": {
+              "content": "Returns an array of all ERC-20 reward tokens registered in the RewardsController.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "rewards",
+                "allRewards"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6419fbd9-a3ad-4672-a98e-cdef14e58a1e",
+              "name": "Array of reward token addresses",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rewards",
+                    "allRewards"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"rewards\": [\n    \"0xEB7c9A76B8deFD2F4acA85D03BcbCBBEFeee01f7\",\n    \"0x7CEc8fbA0BA67D0b31db491C81F388eF9cDFCdB7\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ffcfbb40-4a69-47bc-8422-24c7355a9ae6",
+          "name": "Get all market operations eligible for rewards",
+          "request": {
+            "name": "Get all market operations eligible for rewards",
+            "description": {
+              "content": "Returns all market-operation pairs (deposit/borrow) registered for reward distribution.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "rewards",
+                "allMarketsOperations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "db9847f2-3abb-452d-86d7-5f14a0e4395a",
+              "name": "Array of MarketOperation structs",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rewards",
+                    "allMarketsOperations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"marketOperations\": [\n    {\n      \"market\": \"0x088da2d86D9C2BFc7BD9afcDe9d2eefD87409075\",\n      \"operations\": [\n        false,\n        false\n      ]\n    },\n    {\n      \"market\": \"0xdC30e6DCBb9Be7af11FBd1Dc4Aa1B77403E83Bd0\",\n      \"operations\": [\n        true,\n        true\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "edd31818-5908-442e-8484-7bbdbbfc09eb",
+          "name": "Get total claimable reward amount for an account",
+          "request": {
+            "name": "Get total claimable reward amount for an account",
+            "description": {
+              "content": "Returns the total amount of a specific reward token claimable by an account across all markets and operations.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "rewards",
+                "allClaimable"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"account\": \"<string>\",\n  \"reward\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "931f2b9e-573e-47b7-8639-ca8b543eb27f",
+              "name": "Total claimable reward amount",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rewards",
+                    "allClaimable"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"account\": \"<string>\",\n  \"reward\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"claimable\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "279a7a44-7a65-42bd-9643-dd0a0999a0d4",
+          "name": "Get claimable rewards for specific market operations",
+          "request": {
+            "name": "Get claimable rewards for specific market operations",
+            "description": {
+              "content": "Returns the claimable amount of a specific reward token for an account across a specified list of market operations.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "rewards",
+                "claimable"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"marketOps\": [\n    {\n      \"market\": \"<string>\",\n      \"operations\": [\n        \"<boolean>\",\n        \"<boolean>\"\n      ]\n    },\n    {\n      \"market\": \"<string>\",\n      \"operations\": [\n        \"<boolean>\",\n        \"<boolean>\"\n      ]\n    }\n  ],\n  \"account\": \"<string>\",\n  \"reward\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "41aaf56f-d35a-4c85-8a71-ecf58813b6b5",
+              "name": "Claimable reward amount",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rewards",
+                    "claimable"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"marketOps\": [\n    {\n      \"market\": \"0x06f6A7aFAfc9A96bd0Ace6dc3e6af7FcDb7f447c\",\n      \"operations\": [\n        false,\n        false\n      ]\n    },\n    {\n      \"market\": \"0xEbCd6aFf2E661a1e215DdcBE6A6269f6Df23b8Fe\",\n      \"operations\": [\n        false,\n        true\n      ]\n    }\n  ],\n  \"account\": \"<string>\",\n  \"reward\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"claimable\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4cf2c85c-b061-487b-abc1-250b4d0bcfe9",
+          "name": "Preview reward allocation for a time period",
+          "request": {
+            "name": "Preview reward allocation for a time period",
+            "description": {
+              "content": "Returns projected deposit and borrow reward allocations and utilization for a specified time delta, useful for estimating rewards APR.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "rewards",
+                "previewAllocation"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"market\": \"<string>\",\n  \"reward\": \"<string>\",\n  \"deltaTime\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "fb905c10-845e-437c-bebb-8cf1c3a2ca75",
+              "name": "Projected allocation amounts",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rewards",
+                    "previewAllocation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"market\": \"<string>\",\n  \"reward\": \"<string>\",\n  \"deltaTime\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"depositRewards\": \"string\",\n  \"borrowRewards\": \"string\",\n  \"utilization\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://app.exact.ly",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "9d03ddfe-5e82-42af-8ac5-a699067f8ba0",
+    "name": "Exactly Protocol Auditor ERC-4626 Rewards Query API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Smart contract interface for the Auditor, the central risk management component of Exactly Protocol. Manages market listings, collateral factors, account liquidity checks, and liquidation eligibility. Provides methods to query all markets, compute account liquidity, calculate seizure amounts, and check liquidation conditions. Deployed on Ethereum, Optimism, and Base.\n\n\nContact Support:\n Name: Exactly Protocol",
+      "type": "text/plain"
+    }
+  }
+}

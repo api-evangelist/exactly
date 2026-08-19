@@ -1,0 +1,89 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Exactly Protocol Auditor ERC-4626 API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "ERC-4626",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get total assets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.exact.ly/market/totalAssets"
+          },
+          "docs": "Returns total assets managed by the market vault (ERC-4626)."
+        },
+        {
+          "info": {
+            "name": "Convert shares to assets",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.exact.ly/market/convertToAssets",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns the amount of underlying assets equivalent to the given number of shares."
+        },
+        {
+          "info": {
+            "name": "Convert assets to shares",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.exact.ly/market/convertToShares",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns the number of shares equivalent to the given amount of underlying assets."
+        },
+        {
+          "info": {
+            "name": "Deposit assets at variable rate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.exact.ly/market/deposit",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Deposits underlying assets into the floating pool and mints ERC-4626 shares to the receiver. Returns the number of shares minted.\n"
+        },
+        {
+          "info": {
+            "name": "Withdraw assets at variable rate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.exact.ly/market/withdraw",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Withdraws a specific amount of underlying assets from the floating pool, burning the required shares from the owner's balance.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

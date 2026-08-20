@@ -49,6 +49,12 @@ apis:
   - Markets
   - Maturity Pools
   - User Positions
+  - Read Only
+  tags_raw:
+  - Previewer
+  - Markets
+  - Maturity Pools
+  - User Positions
   - Read-only
   properties:
   - type: Documentation

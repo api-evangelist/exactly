@@ -61,7 +61,7 @@ apis:
   - Markets
   - Maturity Pools
   - User Positions
-  - Read Only
+  - Read-only
   tags_raw:
   - Previewer
   - Markets

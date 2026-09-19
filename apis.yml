@@ -91,6 +91,14 @@ apis:
   humanURL: https://docs.exact.ly/guides/protocol/market.md
   baseURL: https://app.exact.ly
   tags:
+  - Markets
+  - ERC-4626
+  - Deposits
+  - Borrows
+  - Liquidations
+  - Variable Rate
+  - Fixed Rate
+  tags_raw:
   - Market
   - ERC-4626
   - Deposits

@@ -1,36 +1,49 @@
 {
   "provider": "exactly",
   "sources": [
-    "exactly-erc-4626-api-openapi.yml",
-    "exactly-fixed-rate-api-openapi.yml",
-    "exactly-liquidations-api-openapi.yml",
-    "exactly-liquidity-api-openapi.yml",
-    "exactly-market-management-api-openapi.yml",
-    "exactly-market-state-api-openapi.yml",
-    "exactly-markets-api-openapi.yml",
-    "exactly-previewer-api-openapi.yml",
-    "exactly-reward-configuration-api-openapi.yml",
-    "exactly-rewards-claims-api-openapi.yml",
-    "exactly-rewards-query-api-openapi.yml",
-    "exactly-variable-rate-api-openapi.yml"
+    "_original/auditor-api.yml",
+    "_original/market-api.yml",
+    "_original/previewer-api.yml",
+    "_original/rewards-controller-api.yml"
   ],
   "outputs": [
-    "exactly-erc-4626-api-openapi.yml",
-    "exactly-fixed-rate-api-openapi.yml",
     "exactly-liquidations-api-openapi.yml",
     "exactly-liquidity-api-openapi.yml",
     "exactly-market-management-api-openapi.yml",
-    "exactly-market-state-api-openapi.yml",
     "exactly-markets-api-openapi.yml",
+    "exactly-erc-4626-api-openapi.yml",
+    "exactly-fixed-rate-api-openapi.yml",
+    "exactly-market-state-api-openapi.yml",
+    "exactly-variable-rate-api-openapi.yml",
     "exactly-previewer-api-openapi.yml",
     "exactly-reward-configuration-api-openapi.yml",
     "exactly-rewards-claims-api-openapi.yml",
-    "exactly-rewards-query-api-openapi.yml",
-    "exactly-variable-rate-api-openapi.yml"
+    "exactly-rewards-query-api-openapi.yml"
   ],
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (4 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "auditor-api.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "market-api.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "previewer-api.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "rewards-controller-api.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "tag 'Liquidations' spans 2 source specs (auditor-api.yml, market-api.yml): per-path servers applied",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "exactly-erc-4626-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "exactly-fixed-rate-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "exactly-liquidations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "exactly-liquidity-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "exactly-market-management-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "exactly-market-state-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "exactly-markets-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "exactly-previewer-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "exactly-reward-configuration-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "exactly-rewards-claims-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "exactly-rewards-query-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "exactly-variable-rate-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

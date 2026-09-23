@@ -1,9 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Exactly Protocol Auditor ERC-4626 Liquidations API
-  description: 'Smart contract interface for the Auditor, the central risk management component of Exactly Protocol. Manages market listings, collateral factors, account liquidity checks, and liquidation eligibility. Provides methods to query all markets, compute account liquidity, calculate seizure amounts, and check liquidation conditions. Deployed on Ethereum, Optimism, and Base.
-
-    '
+  title: Exactly Liquidations API
   version: 1.0.0
   contact:
     name: Exactly Protocol
@@ -11,6 +8,7 @@ info:
   license:
     name: MIT
     url: https://github.com/exactly/protocol/blob/main/LICENSE-MIT
+  description: 'Operations tagged Liquidations across 2 of this provider''s published API definitions: auditor-api.yml, market-api.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://app.exact.ly
   description: Exactly Protocol App
@@ -21,9 +19,7 @@ paths:
   /auditor/calculateSeize:
     post:
       summary: Calculate assets to seize during liquidation
-      description: 'Calculates the amount of collateral to seize from a borrower during liquidation, accounting for the liquidation incentive and lender fees.
-
-        '
+      description: Calculates the amount of collateral to seize from a borrower during liquidation, accounting for the liquidation incentive and lender fees.
       operationId: calculateSeize
       tags:
       - Liquidations
@@ -68,12 +64,13 @@ paths:
                   seizeAssets:
                     type: string
                     description: Total collateral assets to seize from borrower (in wei)
+    servers:
+    - url: https://app.exact.ly
+      description: Exactly Protocol App
   /auditor/checkLiquidation:
     post:
       summary: Check liquidation eligibility and maximum repay
-      description: 'Verifies that a liquidation is valid and computes the maximum assets the liquidator is allowed to repay given the dynamic close factor.
-
-        '
+      description: Verifies that a liquidation is valid and computes the maximum assets the liquidator is allowed to repay given the dynamic close factor.
       operationId: checkLiquidation
       tags:
       - Liquidations
@@ -115,12 +112,13 @@ paths:
                   maxRepayAssets:
                     type: string
                     description: Maximum allowed repay amount after dynamic close factor (in wei)
+    servers:
+    - url: https://app.exact.ly
+      description: Exactly Protocol App
   /market/liquidate:
     post:
       summary: Liquidate an undercollateralized borrower
-      description: 'Liquidates a borrower''s variable rate debt when their health factor falls below the threshold. The liquidator repays up to maxAssets of debt and receives collateral from the seizeMarket.
-
-        '
+      description: Liquidates a borrower's variable rate debt when their health factor falls below the threshold. The liquidator repays up to maxAssets of debt and receives collateral from the seizeMarket.
       operationId: liquidate
       tags:
       - Liquidations
@@ -157,12 +155,13 @@ paths:
                   repaidAssets:
                     type: string
                     description: Total assets repaid (in wei)
+    servers:
+    - url: https://app.exact.ly
+      description: Exactly Protocol App
   /market/clearBadDebt:
     post:
       summary: Clear bad debt for a borrower
-      description: 'Clears bad debt from a borrower''s account by using the earnings accumulator. Only callable when the borrower''s collateral has been fully seized.
-
-        '
+      description: Clears bad debt from a borrower's account by using the earnings accumulator. Only callable when the borrower's collateral has been fully seized.
       operationId: clearBadDebt
       tags:
       - Liquidations
@@ -182,6 +181,9 @@ paths:
       responses:
         '200':
           description: Bad debt cleared successfully
-externalDocs:
-  description: Exactly Protocol Auditor Documentation
-  url: https://docs.exact.ly/guides/protocol/auditor.md
+    servers:
+    - url: https://app.exact.ly
+      description: Exactly Protocol App
+x-refined-from:
+- auditor-api.yml
+- market-api.yml

@@ -129,6 +129,13 @@ apis:
   baseURL: https://app.exact.ly
   tags:
   - Auditor
+  - Risk Management
+  - Collateral
+  - Liquidity
+  - Liquidations
+  - Markets
+  tags_raw:
+  - Auditor
   - Risk
   - Collateral
   - Liquidity

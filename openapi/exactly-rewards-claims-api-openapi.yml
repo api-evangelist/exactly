@@ -85,6 +85,21 @@ paths:
                 $ref: '#/components/schemas/ClaimResult'
 components:
   schemas:
+    ClaimResult:
+      type: object
+      description: Result of a reward claim operation
+      properties:
+        rewardsList:
+          type: array
+          description: List of reward token addresses that were claimed
+          items:
+            type: string
+            pattern: ^0x[a-fA-F0-9]{40}$
+        claimedAmounts:
+          type: array
+          description: Amounts of each reward token claimed (in wei, parallel array to rewardsList)
+          items:
+            type: string
     MarketOperation:
       type: object
       description: A market and operation type pair for reward queries/claims
@@ -101,21 +116,6 @@ components:
           description: Operation types (true = borrow, false = deposit)
           items:
             type: boolean
-    ClaimResult:
-      type: object
-      description: Result of a reward claim operation
-      properties:
-        rewardsList:
-          type: array
-          description: List of reward token addresses that were claimed
-          items:
-            type: string
-            pattern: ^0x[a-fA-F0-9]{40}$
-        claimedAmounts:
-          type: array
-          description: Amounts of each reward token claimed (in wei, parallel array to rewardsList)
-          items:
-            type: string
 externalDocs:
   description: Exactly Protocol RewardsController Documentation
   url: https://docs.exact.ly/guides/protocol/rewardscontroller.md

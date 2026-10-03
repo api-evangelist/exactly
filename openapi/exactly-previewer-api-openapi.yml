@@ -264,19 +264,6 @@ paths:
                 $ref: '#/components/schemas/FixedPreview'
 components:
   schemas:
-    FixedPreview:
-      type: object
-      description: Preview result for a fixed-rate pool operation
-      properties:
-        maturity:
-          type: integer
-          description: Unix timestamp of the maturity pool
-        assets:
-          type: string
-          description: Net assets received or required (in wei)
-        utilization:
-          type: string
-          description: Pool utilization after the operation (scaled by 1e18)
     FixedPool:
       type: object
       description: Summary of a fixed-rate maturity pool
@@ -357,6 +344,19 @@ components:
         isCollateral:
           type: boolean
           description: Whether account has enabled this market as collateral
+    FixedPreview:
+      type: object
+      description: Preview result for a fixed-rate pool operation
+      properties:
+        maturity:
+          type: integer
+          description: Unix timestamp of the maturity pool
+        assets:
+          type: string
+          description: Net assets received or required (in wei)
+        utilization:
+          type: string
+          description: Pool utilization after the operation (scaled by 1e18)
 externalDocs:
   description: Exactly Protocol Previewer Documentation
   url: https://docs.exact.ly/guides/periphery-contracts/previewer-read-only.md

@@ -144,19 +144,6 @@ paths:
                     description: Borrow shares burned
 components:
   schemas:
-    DepositRequest:
-      type: object
-      required:
-      - assets
-      - receiver
-      properties:
-        assets:
-          type: string
-          description: Amount of underlying assets to deposit (in wei)
-        receiver:
-          type: string
-          description: Address to receive the minted shares
-          pattern: ^0x[a-fA-F0-9]{40}$
     WithdrawRequest:
       type: object
       required:
@@ -174,6 +161,19 @@ components:
         owner:
           type: string
           description: Address of the shares owner
+          pattern: ^0x[a-fA-F0-9]{40}$
+    DepositRequest:
+      type: object
+      required:
+      - assets
+      - receiver
+      properties:
+        assets:
+          type: string
+          description: Amount of underlying assets to deposit (in wei)
+        receiver:
+          type: string
+          description: Address to receive the minted shares
           pattern: ^0x[a-fA-F0-9]{40}$
 externalDocs:
   description: Exactly Protocol Market Documentation

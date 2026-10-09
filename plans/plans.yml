@@ -1,3 +1,7 @@
+# Provenance stamped 2026-10-07 (roadmap#943): written by an API Evangelist sweep (undated — the file carries no date and git cannot supply one), not
+# harvested from the provider. `method: generated` so the economics campaign may replace it with a
+# dated, verbatim transcription; every figure below is unverified until it does.
+method: generated
 name: Exactly Protocol Plans
 description: >
   Exactly Protocol is a fully decentralized, permissionless protocol with no
@@ -49,3 +53,21 @@ plans:
     restrictions:
       - GRT query fees may apply on The Graph decentralized network
       - Rate limits are governed by The Graph's indexer policies
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models: []
+  units: []
+  plans:
+  - name: Open Protocol Access
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
+  - name: The Graph Subgraph Access
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []

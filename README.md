@@ -1,4 +1,4 @@
-# Exactly Protocol (exactly)
+# Exactly Protocol
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,161 +66,182 @@
 
 Exactly Protocol is a decentralized, non-custodial, open-source protocol providing autonomous fixed and variable interest rate credit markets on Ethereum, Optimism, and Base. It enables users to deposit and borrow crypto assets at both variable rates and fixed rates through maturity pools, using a continuous non-linear interest rate model, dynamic close factor liquidations, and a rewards distribution system with the EXA governance token.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/exactly/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/exactly/refs/heads/main/apis.yml)
+**Areas:** DeFi · Lending · Borrowing · Fixed Rate · Variable Rate · Ethereum · Optimism · Base · ERC-4626 · Credit Markets
 
-## Tags
+## Exactly Protocol on APIs.io
 
-- DeFi
-- Lending
-- Borrowing
-- Fixed Rate
-- Variable Rate
-- Ethereum
-- Optimism
-- Base
-- ERC-4626
-- Credit Markets
+Everything profiled for Exactly Protocol is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/exactly/](https://apis.io/providers/exactly/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### APIs (17)
 
-- **Created:** 2026-06-14
-- **Modified:** 2026-06-14
+- [Exactly Protocol Previewer API](https://apis.io/apis/exactly/exactly-protocol-previewer-api/) — Read-only smart contract interface for previewing deposits, borrows, withdrawals, and repayments across all market maturity pools. Returns projected yields,…
+- [Exactly Protocol Market API](https://apis.io/apis/exactly/exactly-protocol-market-api/) — ERC-4626-compliant smart contract interface for the core Market contract exposing view and write methods for depositing, borrowing, withdrawing, repaying,…
+- [Exactly Protocol Auditor API](https://apis.io/apis/exactly/exactly-protocol-auditor-api/) — Smart contract interface for the Auditor, the central risk management component that manages market listings, collateral factors, account liquidity checks,…
+- [Exactly Protocol RewardsController API](https://apis.io/apis/exactly/exactly-protocol-rewardscontroller-api/) — Smart contract interface for querying and claiming EXA and esEXA token rewards distributed to depositors and borrowers. Supports querying claimable rewards,…
+- [Exactly Protocol Subgraph API (The Graph)](https://apis.io/apis/exactly/exactly-protocol-subgraph-api-the-graph/) — GraphQL subgraph API powered by The Graph for querying indexed on-chain data from Exactly Protocol on Ethereum mainnet and Optimism. Supports advanced…
+- [Exactly Protocol ERC-4626 API](https://apis.io/apis/exactly/exactly-erc-4626-api/) — ERC-4626 vault standard methods
+- [Exactly Protocol Fixed Rate API](https://apis.io/apis/exactly/exactly-fixed-rate-api/) — Fixed rate maturity pool operations
+- [Exactly Protocol Liquidations API](https://apis.io/apis/exactly/exactly-liquidations-api/) — Liquidation eligibility and seizure calculations
+- [Exactly Protocol Liquidity API](https://apis.io/apis/exactly/exactly-liquidity-api/) — Account liquidity and collateral checks
+- [Exactly Protocol Market Management API](https://apis.io/apis/exactly/exactly-market-management-api/) — Write methods for market configuration (admin only)
+- [Exactly Protocol Market State API](https://apis.io/apis/exactly/exactly-market-state-api/) — View methods for querying market state
+- [Exactly Protocol Markets API](https://apis.io/apis/exactly/exactly-markets-api/) — Market listing and configuration queries
+- [Exactly Protocol Previewer API](https://apis.io/apis/exactly/exactly-previewer-api/) — Read-only preview methods for Exactly Protocol markets
+- [Exactly Protocol Reward Configuration API](https://apis.io/apis/exactly/exactly-reward-configuration-api/) — Reward program configuration and indexes
+- [Exactly Protocol Rewards Claims API](https://apis.io/apis/exactly/exactly-rewards-claims-api/) — Write methods for claiming earned rewards
+- [Exactly Protocol Rewards Query API](https://apis.io/apis/exactly/exactly-rewards-query-api/) — View methods for querying reward state and amounts
+- [Exactly Protocol Variable Rate API](https://apis.io/apis/exactly/exactly-variable-rate-api/) — Floating/variable rate deposit and borrow operations
 
-## APIs
+### Published properties
 
-### Exactly Protocol Previewer API
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-Read-only smart contract interface for previewing deposits, borrows, withdrawals, and repayments across all market maturity pools. Returns projected yields, repayment amounts, and comprehensive account positions across all markets on Ethereum and Optimism without executing any transactions.
+#### GraphQL (1)
 
-- **Human URL:** [https://docs.exact.ly/guides/periphery-contracts/previewer-read-only.md](https://docs.exact.ly/guides/periphery-contracts/previewer-read-only.md)
-- **Base URL:** `https://app.exact.ly`
+GraphQL schemas.
 
-#### Tags
+- [Exactly Protocol GraphQL API (The Graph Subgraph)](https://apis.io/graphqls/exactly/exactly-graphql/)
 
-- Previewer
-- Markets
-- Maturity Pools
-- User Positions
-- Read-only
+#### Agentic access (1)
 
-#### Properties
+Which operations an agent can call, which act, and which need a human in the loop.
 
-- [Documentation](https://docs.exact.ly/guides/periphery-contracts/previewer-read-only.md)
-- [Plans](https://raw.githubusercontent.com/api-evangelist/exactly/refs/heads/main/plans/plans.yml)
-- [Rate Limits](https://raw.githubusercontent.com/api-evangelist/exactly/refs/heads/main/rate-limits/rate-limits.yml)
-- [Graph Q L](graphql/exactly-graphql.md)
+- [Exactly Agentic Access](https://apis.io/agentic-access/exactly/exactly-agentic-access/)
 
-### Exactly Protocol Market API
+#### JSON Schema (3)
 
-ERC-4626-compliant smart contract interface for the core Market contract exposing view and write methods for depositing, borrowing, withdrawing, repaying, minting, redeeming, and liquidating positions at both variable and fixed rates. Includes account snapshots, debt previews, and floating asset calculations.
+The data models the API reads and writes.
 
-- **Human URL:** [https://docs.exact.ly/guides/protocol/market.md](https://docs.exact.ly/guides/protocol/market.md)
-- **Base URL:** `https://app.exact.ly`
+- [FixedPreview](https://apis.io/schemas/exactly/fixed-preview/)
+- [MarketAccount](https://apis.io/schemas/exactly/market-account/)
+- [RewardConfig](https://apis.io/schemas/exactly/reward-config/)
 
-#### Tags
+#### JSON-LD (1)
 
-- Market
-- ERC-4626
-- Deposits
-- Borrows
-- Liquidations
-- Variable Rate
-- Fixed Rate
+Linked-data contexts for the provider's vocabulary.
 
-#### Properties
+- [Exactly Context](https://apis.io/jsonld/exactly/exactly-context/)
 
-- [Documentation](https://docs.exact.ly/guides/protocol/market.md)
-- [Plans](https://raw.githubusercontent.com/api-evangelist/exactly/refs/heads/main/plans/plans.yml)
-- [Rate Limits](https://raw.githubusercontent.com/api-evangelist/exactly/refs/heads/main/rate-limits/rate-limits.yml)
+#### Vocabulary (1)
 
-### Exactly Protocol Auditor API
+The provider's domain terms, defined.
 
-Smart contract interface for the Auditor, the central risk management component that manages market listings, collateral factors, account liquidity checks, and liquidation eligibility. Provides methods to query all markets, compute account liquidity, calculate seizure amounts, and check liquidation conditions.
+- [Exactly Protocol Vocabulary](https://apis.io/vocabularies/exactly/exactly-vocabulary/)
 
-- **Human URL:** [https://docs.exact.ly/guides/protocol/auditor.md](https://docs.exact.ly/guides/protocol/auditor.md)
-- **Base URL:** `https://app.exact.ly`
+#### Examples (3)
 
-#### Tags
+Example requests and responses.
 
-- Auditor
-- Risk
-- Collateral
-- Liquidity
-- Liquidations
-- Markets
+- [Claim All Rewards](https://apis.io/examples/exactly/claim-all-rewards/)
+- [Get Market Accounts](https://apis.io/examples/exactly/get-market-accounts/)
+- [Preview Deposit At Maturity](https://apis.io/examples/exactly/preview-deposit-at-maturity/)
 
-#### Properties
+#### Collections (11)
 
-- [Documentation](https://docs.exact.ly/guides/protocol/auditor.md)
-- [Plans](https://raw.githubusercontent.com/api-evangelist/exactly/refs/heads/main/plans/plans.yml)
-- [Rate Limits](https://raw.githubusercontent.com/api-evangelist/exactly/refs/heads/main/rate-limits/rate-limits.yml)
+Postman and Open Collection request collections.
 
-### Exactly Protocol RewardsController API
+- [Exactly Protocol Auditor ERC-4626 API](https://apis.io/collections/exactly/open-exactly-erc-4626-api/)
+- [Exactly Protocol Auditor ERC-4626 Fixed Rate API](https://apis.io/collections/exactly/open-exactly-fixed-rate-api/)
+- [Exactly Protocol Auditor ERC-4626 Liquidations API](https://apis.io/collections/exactly/open-exactly-liquidations-api/)
+- [Exactly Protocol Auditor ERC-4626 Liquidity API](https://apis.io/collections/exactly/open-exactly-liquidity-api/)
+- [Exactly Protocol Auditor ERC-4626 Market Management API](https://apis.io/collections/exactly/open-exactly-market-management-api/)
+- [Exactly Protocol Auditor ERC-4626 Market State API](https://apis.io/collections/exactly/open-exactly-market-state-api/)
+- [Exactly Protocol Auditor ERC-4626 Markets API](https://apis.io/collections/exactly/open-exactly-markets-api/)
+- [Exactly Protocol Auditor ERC-4626 Reward Configuration API](https://apis.io/collections/exactly/open-exactly-reward-configuration-api/)
+- [Exactly Protocol Auditor ERC-4626 Rewards Claims API](https://apis.io/collections/exactly/open-exactly-rewards-claims-api/)
+- [Exactly Protocol Auditor ERC-4626 Rewards Query API](https://apis.io/collections/exactly/open-exactly-rewards-query-api/)
+- [Exactly Protocol Auditor ERC-4626 Variable Rate API](https://apis.io/collections/exactly/open-exactly-variable-rate-api/)
 
-Smart contract interface for querying and claiming EXA and esEXA token rewards distributed to depositors and borrowers. Supports querying claimable rewards, reward configurations, distribution timelines, reward indexes, and claiming rewards across all market operations.
+#### Governance rules (1)
 
-- **Human URL:** [https://docs.exact.ly/guides/protocol/rewardscontroller.md](https://docs.exact.ly/guides/protocol/rewardscontroller.md)
-- **Base URL:** `https://app.exact.ly`
+Spectral rulesets for the provider's contracts.
 
-#### Tags
+- [Exactly Protocol — jsonschema rules](https://apis.io/rules/exactly/exactly-jsonschema-spectral-rules/)
 
-- Rewards
-- EXA
-- esEXA
-- Distribution
-- Governance
+#### Security (1)
 
-#### Properties
+Authentication, trust centre, and vulnerability disclosure.
 
-- [Documentation](https://docs.exact.ly/guides/protocol/rewardscontroller.md)
-- [Plans](https://raw.githubusercontent.com/api-evangelist/exactly/refs/heads/main/plans/plans.yml)
-- [Rate Limits](https://raw.githubusercontent.com/api-evangelist/exactly/refs/heads/main/rate-limits/rate-limits.yml)
+- [Exactly Domain Security](https://apis.io/security/exactly/exactly-domain-security/)
 
-### Exactly Protocol Subgraph API (The Graph)
+#### Plans and pricing (1)
 
-GraphQL subgraph API powered by The Graph for querying indexed on-chain data from Exactly Protocol on Ethereum mainnet and Optimism. Supports advanced queries including aggregation, filtering, relationships, and historical data for markets, user positions, maturity pools, borrowing rates, and protocol-wide statistics.
+Published plans, tiers and prices.
 
-- **Human URL:** [https://docs.exact.ly/guides/the-graph.md](https://docs.exact.ly/guides/the-graph.md)
-- **Base URL:** `https://api.thegraph.com`
+- [Plans](https://apis.io/plans/exactly/plans/)
 
-#### Tags
+#### Rate limits (1)
 
-- GraphQL
-- Subgraph
-- The Graph
-- Historical Data
-- Analytics
-- Ethereum
-- Optimism
+Published request limits.
 
-#### Properties
+- [Rate Limits](https://apis.io/rate-limits/exactly/rate-limits/)
 
-- [Documentation](https://docs.exact.ly/guides/the-graph.md)
-- [Graph Q L](https://thegraph.com/explorer/subgraphs/As6Xz6GCvbW8B9Xb7Rx2LqQeJcL3FcUyD8Tk95L8rG5d)
-- [Graph Q L](https://thegraph.com/explorer/subgraphs/9jpa2F3ZuirB11m3GL36wcNoNGETd3Z2zf7Cre5iwyeC)
-- [Plans](https://raw.githubusercontent.com/api-evangelist/exactly/refs/heads/main/plans/plans.yml)
-- [Rate Limits](https://raw.githubusercontent.com/api-evangelist/exactly/refs/heads/main/rate-limits/rate-limits.yml)
+#### FinOps (1)
 
-## Common Properties
+What the API costs to run, by operation.
+
+- [Finops](https://apis.io/finops/exactly/finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
 - [Website](https://exact.ly)
 - [Documentation](https://docs.exact.ly)
-- [Git Hub](https://github.com/exactly)
-- [Discord](https://discord.gg/exactly)
-- [Twitter](https://twitter.com/exactlyprotocol)
-- [Telegram](https://t.me/exactlyprotocol)
-- [Medium](https://medium.com/exactly-protocol)
-- [Terms of Service](https://exact.ly/terms)
-- [Privacy Policy](https://exact.ly/privacy)
-- [Bug Bounty](https://immunefi.com/bounty/exactly)
-- [Status Page](https://exact.ly)
-- [Governance](https://docs.exact.ly/governance/protocol-governance)
-- [White Paper](https://docs.exact.ly/resources/white-paper)
-- [Audits](https://docs.exact.ly/security/audits)
-- [Smart Contracts](https://docs.exact.ly/guides/smart-contract-addresses.md)
-- [Finops](https://raw.githubusercontent.com/api-evangelist/exactly/refs/heads/main/finops/finops.yml)
+- [Blog](https://medium.com/feed/@exactly_protocol)
+- [Terms of service](https://exact.ly/terms)
+- [Privacy policy](https://exact.ly/privacy)
+- [Status](https://exact.ly)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 27.9** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 71.4 |
+| Contract quality | 55.3 |
+| Contract governance | 9.8 |
+| Operational transparency | 21.1 |
+| Developer ergonomics | 16.7 |
+| Access clarity | 5.3 |
+
+**Agent readiness 19.8** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | — |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 10.8** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/exactly/](https://apis.io/providers/exactly/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Exactly Protocol: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/exactly/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
